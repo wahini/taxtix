@@ -1,38 +1,116 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root,
 .App {
-  text-align: center;
+  height: 100%;
+  overflow: hidden; /* Prevents scrolling */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.top-header {
+  background-color: #777; /* Gray color for the top header */
+  color: #e0e0e0; /* Light color for text */
+  padding: 20px;
+  font-size: 14px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.main-body {
+  background-color: green; /* Green color for body */
+  color: black;
+  flex-grow: 1;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.wordle-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.grid {
+  display: grid;
+  gap: 5px;
+}
+
+.row {
+  display: flex;
+  gap: 5px;
+}
+
+.cell {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  background-color: #333;
+  color: #fff;
+}
+
+.cell.correct {
+  background-color: green;
+}
+
+.cell.present {
+  background-color: orange;
+}
+
+.cell.absent {
+  background-color: #444;
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.keyboard-row {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+.key-button {
+  padding: 10px 15px;
+  font-size: 18px;
+  border: none;
+  background-color: #777;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.key-button:active {
+  background-color: #555;
+}
+
+.enter-button {
+  width: 80px;
+}
+
+.bottom-footer {
+  background-color: #777; /* Gray color for the footer */
+  color: #e0e0e0; /* Light color for text */
+  padding: 20px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }

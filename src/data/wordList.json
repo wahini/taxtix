@@ -1,0 +1,20 @@
+[
+  "AUDIT", 
+  "BADAN", "BATAS", "BAYAR", "BEBAN", "BONUS",
+  "CUKAI", 
+  "DEBIT", "DENDA",
+  "GADAI", 
+  "HARGA", "HARTA", "HUKUM",
+  "JAMIN", 
+  "KASUS", "KUASA",
+  "LAPOR", 
+  "MASUK", "MODAL", 
+  "NILAI", 
+  "OBJEK", 
+  "PAJAK", "PASAL", "PIHAK",
+  "SALDO", "SAHAM", "SURAT", "SUKUK", 
+  "TABEL", "TAHUN", "TARIF", "TARIK", "TUKAR", "TUNAI", 
+  "UTAMA", "UTANG", 
+  "WAJIB", "WAKAF", "WARIS", 
+  "ZAKAT"
+]

@@ -1,0 +1,113 @@
+/* ./src/components/VirtualKeyboard/VirtualKeyboard.css */
+
+/* Local Styles for VirtualKeyboard */
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.keyboard-row {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+.key-button {
+  flex: 1;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  background-color: #777;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s, transform 0.2s;
+  max-width: 60px;
+  min-width: 40px;
+  text-align: center;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.key-button:active {
+  background-color: #555;
+  transform: translateY(2px);
+}
+
+.key-button:hover {
+  background-color: #666;
+}
+
+.key-button.correct {
+  background-color: green;
+  animation: correct-key-animate 0.5s ease-in-out;
+}
+
+.key-button.present {
+  background-color: orange;
+  animation: present-key-animate 0.5s ease-in-out;
+}
+
+.key-button.absent {
+  background-color: #444;
+  animation: absent-key-animate 0.5s ease-in-out;
+}
+
+@keyframes correct-key-animate {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes present-key-animate {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes absent-key-animate {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.enter-button {
+  flex: 1.5;
+  max-width: 60px;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .key-button {
+    padding: 12px;
+    font-size: 16px;
+    max-width: 45px;
+    min-width: 35px;
+  }
+
+  .enter-button {
+    max-width: 45px;
+  }
+}
+
+@media (max-width: 480px) {
+  .key-button {
+    padding: 10px;
+    font-size: 14px;
+    max-width: 40px;
+    min-width: 30px;
+  }
+
+  .enter-button {
+    max-width: 40px;
+  }
+}
