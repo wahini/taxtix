@@ -1,5 +1,5 @@
 /* ./src/styes/global.css */
-/* Global Styles */
+
 * {
   margin: 0;
   padding: 0;
@@ -21,7 +21,7 @@ body,
 }
 
 .main-body {
-  background-color: green; /* Green color for body */
+  background-color: #1f1f1f;
   color: black;
   flex-grow: 1;
   padding: 20px;
