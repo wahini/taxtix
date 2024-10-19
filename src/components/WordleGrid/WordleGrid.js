@@ -7,7 +7,7 @@ import wordListData from '../../data/wordList.json';
 import GridRow from './GridRow';
 import PopupMessage from './PopupMessage';
 
-const WordleGrid = ({ handleVirtualKeyClick, handleEnter, handleDelete, gameOver }) => {
+const WordleGrid = ({ handleVirtualKeyClick, handleEnter, handleDelete, gameOver, handleKeyProcessed }) => {
   const [wordToGuess] = useState(() => getRandomWord());
   const [guesses, setGuesses] = useState(Array(6).fill('').map(() => Array(5).fill('')));
   const [currentGuess, setCurrentGuess] = useState('');
@@ -79,8 +79,9 @@ const WordleGrid = ({ handleVirtualKeyClick, handleEnter, handleDelete, gameOver
   useEffect(() => {
     if (handleVirtualKeyClick) {
       handleKeyPress(handleVirtualKeyClick);
+      handleKeyProcessed(); // Clear the virtual key after processing
     }
-  }, [handleVirtualKeyClick, handleKeyPress]);
+  }, [handleVirtualKeyClick, handleKeyPress, handleKeyProcessed]);
 
   return (
     <div className="wordle-container">

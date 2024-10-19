@@ -13,18 +13,30 @@ function App() {
   const [virtualKey, setVirtualKey] = useState(null);
 
   const handleVirtualKeyClick = useCallback((key) => {
-    setVirtualKey(key);
-  }, []);
+    if (key !== virtualKey) {
+      console.log(`Setting virtual key: ${key}`); // Debug log for state update
+      setVirtualKey(key);
+    }
+  }, [virtualKey]);
 
   const handleEnter = useCallback(() => {
     if (gameOver) return;
-    setVirtualKey('ENTER');  // Trigger virtual key for Enter
-  }, [gameOver]);
+    if (virtualKey !== 'ENTER') {
+      setVirtualKey('ENTER');  // Trigger virtual key for Enter
+    }
+  }, [gameOver, virtualKey]);
 
   const handleDelete = useCallback(() => {
     if (gameOver) return;
-    setVirtualKey('BACKSPACE');  // Trigger virtual key for Backspace
-  }, [gameOver]);
+    if (virtualKey !== 'BACKSPACE') {
+      setVirtualKey('BACKSPACE');  // Trigger virtual key for Backspace
+    }
+  }, [gameOver, virtualKey]);
+
+  // Add this function to reset the virtual key after it is processed
+  const handleKeyProcessed = useCallback(() => {
+    setVirtualKey(null);
+  }, []);
 
   return (
     <div className="App">
@@ -34,6 +46,7 @@ function App() {
           handleVirtualKeyClick={virtualKey}
           gameOver={gameOver}
           setGameOver={setGameOver}
+          handleKeyProcessed={handleKeyProcessed}  // Pass the new handler to WordleGrid
         />
         <VirtualKeyboard
           handleKeyClick={handleVirtualKeyClick}
