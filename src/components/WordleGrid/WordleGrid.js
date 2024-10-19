@@ -4,6 +4,8 @@ import React, { useState, useCallback, useEffect } from 'react';
 import useInputHandler from '../../utils/InputHandler';
 import './WordleGrid.css';
 import wordListData from '../../data/wordList.json';
+import GridRow from './GridRow';
+import PopupMessage from './PopupMessage';
 
 const WordleGrid = ({ handleVirtualKeyClick, handleEnter, handleDelete, gameOver }) => {
   const [wordToGuess] = useState(() => getRandomWord());
@@ -12,7 +14,6 @@ const WordleGrid = ({ handleVirtualKeyClick, handleEnter, handleDelete, gameOver
   const [currentAttempt, setCurrentAttempt] = useState(0);
   const [popupMessage, setPopupMessage] = useState('');
   const [flippingCells, setFlippingCells] = useState([]);
-  const [processedKey, setProcessedKey] = useState(null);
 
   function getRandomWord() {
     return wordListData[Math.floor(Math.random() * wordListData.length)];
@@ -76,42 +77,27 @@ const WordleGrid = ({ handleVirtualKeyClick, handleEnter, handleDelete, gameOver
 
   // Handle virtual keyboard input
   useEffect(() => {
-    if (handleVirtualKeyClick && handleVirtualKeyClick !== processedKey) {
+    if (handleVirtualKeyClick) {
       handleKeyPress(handleVirtualKeyClick);
-      setProcessedKey(handleVirtualKeyClick); // Mark the key as processed
     }
-  }, [handleVirtualKeyClick, handleKeyPress, processedKey]);
+  }, [handleVirtualKeyClick, handleKeyPress]);
 
   return (
     <div className="wordle-container">
       <div className="grid" style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}>
         {guesses.map((row, rowIndex) => (
-          <div key={rowIndex} className="row" style={{ display: 'flex', gap: '5px' }}>
-            {row.map((letter, letterIndex) => (
-              <div
-                key={letterIndex}
-                className={`cell ${
-                  flippingCells.includes(letterIndex) && rowIndex === currentAttempt
-                    ? 'flipping'
-                    : letter
-                    ? wordToGuess[letterIndex] === letter
-                      ? 'correct'
-                      : wordToGuess.includes(letter)
-                      ? 'present'
-                      : 'absent'
-                    : ''
-                }`}
-                style={{ flex: 1, height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-              >
-                {rowIndex === currentAttempt && letterIndex < currentGuess.length
-                  ? currentGuess[letterIndex]
-                  : letter}
-              </div>
-            ))}
-          </div>
+          <GridRow
+            key={rowIndex}
+            row={row}
+            rowIndex={rowIndex}
+            currentAttempt={currentAttempt}
+            currentGuess={currentGuess}
+            wordToGuess={wordToGuess}
+            flippingCells={flippingCells}
+          />
         ))}
       </div>
-      {popupMessage && <div className="popup-message">{popupMessage}</div>}
+      {popupMessage && <PopupMessage message={popupMessage} />}
     </div>
   );
 };
