@@ -1,4 +1,16 @@
-/* ./src/styes/global.css */
+/* global.css - Combined Global Dark Theme Styles with App.css Merged */
+
+:root {
+  --primary-bg-color: #121213; /* Very Dark Gray, almost black */
+  --primary-text-color: #ffffff; /* White Text Color */
+  --accent-color: #3a3a3c; /* Dark Gray for empty tiles and accents */
+  --secondary-bg-color: #1f1f1f; /* Dark Gray for secondary elements */
+  --button-hover-bg-color: #0056b3; /* Darker Blue for button hover */
+  --button-bg-color: #3a3a3a; /* Button Background */
+  --correct-bg-color: #538d4e; /* Green for correct letters */
+  --present-bg-color: #b59f3b; /* Yellow for present letters */
+  --absent-bg-color: #3a3a3c; /* Dark Gray for absent letters */
+}
 
 * {
   margin: 0;
