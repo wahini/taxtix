@@ -9,26 +9,21 @@ import './App.css';
 import './styles/global.css';
 
 function App() {
-  const [virtualKey, setVirtualKey] = useState(null);
   const [gameOver, setGameOver] = useState(false);
+  const [virtualKey, setVirtualKey] = useState(null);
 
-  const handleKeyPress = useCallback((key) => {
+  const handleVirtualKeyClick = useCallback((key) => {
     setVirtualKey(key);
   }, []);
 
-  const handleVirtualKeyClick = useCallback((key) => {
-    handleKeyPress(key);
-  }, [handleKeyPress]);
-
   const handleEnter = useCallback(() => {
-    // Handle the game over state
     if (gameOver) return;
-    setGameOver(true); // Example of how you might handle the game ending
+    setVirtualKey('ENTER');  // Trigger virtual key for Enter
   }, [gameOver]);
 
   const handleDelete = useCallback(() => {
     if (gameOver) return;
-    // Handle deletion logic here
+    setVirtualKey('BACKSPACE');  // Trigger virtual key for Backspace
   }, [gameOver]);
 
   return (
@@ -37,9 +32,8 @@ function App() {
       <main className="main-body">
         <WordleGrid
           handleVirtualKeyClick={virtualKey}
-          handleEnter={handleEnter}
-          handleDelete={handleDelete}
           gameOver={gameOver}
+          setGameOver={setGameOver}
         />
         <VirtualKeyboard
           handleKeyClick={handleVirtualKeyClick}
