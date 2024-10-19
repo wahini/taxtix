@@ -1,27 +1,35 @@
 /* ./src/components/WordleGrid/WordleGrid.js */
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import useInputHandler from '../../utils/InputHandler';
 import './WordleGrid.css';
 import wordListData from '../../data/wordList.json';
 
-const WordleGrid = () => {
+const WordleGrid = ({ handleVirtualKeyClick, handleEnter, handleDelete, gameOver }) => {
   const [wordToGuess] = useState(() => getRandomWord());
   const [guesses, setGuesses] = useState(Array(6).fill('').map(() => Array(5).fill('')));
   const [currentGuess, setCurrentGuess] = useState('');
   const [currentAttempt, setCurrentAttempt] = useState(0);
-  const [gameOver, setGameOver] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
   const [flippingCells, setFlippingCells] = useState([]);
+  const [processedKey, setProcessedKey] = useState(null);
 
   function getRandomWord() {
     return wordListData[Math.floor(Math.random() * wordListData.length)];
   }
 
-  const handleEnter = useCallback(() => {
+  const showPopup = useCallback((message) => {
+    setPopupMessage(message);
+    setTimeout(() => {
+      setPopupMessage('');
+    }, 1000);
+  }, []);
+
+  const handleEnterInternal = useCallback(() => {
     if (gameOver || currentGuess.length !== 5) return;
 
     if (!wordListData.includes(currentGuess)) {
-      showPopup(`"${currentGuess}" tidak ditemukan`);
+      showPopup(`"${currentGuess}" is not a valid word`);
       return;
     }
 
@@ -36,46 +44,43 @@ const WordleGrid = () => {
       setFlippingCells([]);
 
       if (currentGuess === wordToGuess) {
-        setGameOver(true);
         showPopup('Congratulations! You guessed the word!');
       } else if (currentAttempt < 5) {
         setCurrentAttempt((prev) => prev + 1);
         setCurrentGuess('');
       } else {
-        setGameOver(true);
         showPopup('Game Over! The correct word was: ' + wordToGuess);
       }
     }, 600);
-  }, [currentGuess, currentAttempt, wordToGuess, gameOver]);
+  }, [currentGuess, currentAttempt, wordToGuess, gameOver, showPopup]);
 
-  const handleDelete = useCallback(() => {
+  const handleDeleteInternal = useCallback(() => {
     if (gameOver) return;
     setCurrentGuess((prev) => prev.slice(0, -1));
   }, [gameOver]);
 
-  const showPopup = (message) => {
-    setPopupMessage(message);
-    setTimeout(() => {
-      setPopupMessage('');
-    }, 1000);
-  };
+  const handleKeyPress = useCallback((key) => {
+    if (gameOver) return;
 
+    if (key === 'ENTER') {
+      handleEnterInternal();
+    } else if (key === 'BACKSPACE') {
+      handleDeleteInternal();
+    } else if (/^[A-Z]$/.test(key)) {
+      setCurrentGuess((prev) => (prev.length < 5 ? prev + key : prev));
+    }
+  }, [gameOver, handleEnterInternal, handleDeleteInternal]);
+
+  // Use custom hook to handle real keyboard input
+  useInputHandler(handleKeyPress);
+
+  // Handle virtual keyboard input
   useEffect(() => {
-    const handleKeyPress = (event) => {
-      const key = event.key.toUpperCase();
-      if (key === 'ENTER') {
-        handleEnter();
-      } else if (key === 'BACKSPACE') {
-        handleDelete();
-      } else if (/^[A-Z]$/.test(key)) {
-        setCurrentGuess((prev) => prev.length < 5 ? prev + key : prev);
-      }
-    };
-    window.addEventListener('keydown', handleKeyPress);
-    return () => {
-      window.removeEventListener('keydown', handleKeyPress);
-    };
-  }, [handleEnter, handleDelete]);
+    if (handleVirtualKeyClick && handleVirtualKeyClick !== processedKey) {
+      handleKeyPress(handleVirtualKeyClick);
+      setProcessedKey(handleVirtualKeyClick); // Mark the key as processed
+    }
+  }, [handleVirtualKeyClick, handleKeyPress, processedKey]);
 
   return (
     <div className="wordle-container">
@@ -112,5 +117,3 @@ const WordleGrid = () => {
 };
 
 export default WordleGrid;
-
-

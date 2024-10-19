@@ -1,6 +1,7 @@
 /* ./src/components/VirtualKeyboard/VirtualKeyboard.js */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import './VirtualKeyboard.css';
 
 const VirtualKeyboard = ({ handleKeyClick, handleEnter, handleDelete, gameOver }) => {
@@ -29,6 +30,14 @@ const VirtualKeyboard = ({ handleKeyClick, handleEnter, handleDelete, gameOver }
       ))}
     </div>
   );
+};
+
+// Prop validation to ensure all required props are provided and correct
+VirtualKeyboard.propTypes = {
+  handleKeyClick: PropTypes.func.isRequired,
+  handleEnter: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+  gameOver: PropTypes.bool.isRequired,
 };
 
 export default VirtualKeyboard;
