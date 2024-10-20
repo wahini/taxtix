@@ -4,7 +4,7 @@ import './Header.css';
 
 const Header = ({ handleRefresh }) => (
   <header className="top-header">
-    <button className="refresh-button" onClick={handleRefresh}>Refresh</button>
+    {/* <button className="refresh-button" onClick={handleRefresh}>Refresh</button> */}
   </header>
 );
 
