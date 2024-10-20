@@ -1,9 +1,32 @@
-/* ./src/styes/global.css */
-/* Global Styles */
+/* global.css - Combined Global Dark Theme Styles with App.css Merged */
+
+:root {
+  --primary-bg-color: #121213; /* Very Dark Gray, almost black */
+  --primary-text-color: #ffffff; /* White Text Color */
+  --accent-color: #3a3a3c; /* Dark Gray for empty tiles and accents */
+  --secondary-bg-color: #1f1f1f; /* Dark Gray for secondary elements */
+  --button-hover-bg-color: #0056b3; /* Darker Blue for button hover */
+  --button-bg-color: #3a3a3a; /* Button Background */
+  --correct-bg-color: #538d4e; /* Green for correct letters */
+  --present-bg-color: #b59f3b; /* Yellow for present letters */
+  --absent-bg-color: #3a3a3c; /* Dark Gray for absent letters */
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
 }
 
 html,
@@ -14,21 +37,54 @@ body,
   overflow: hidden; /* Prevents scrolling */
 }
 
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  color: var(--accent-color);
+}
+
+button {
+  background-color: var(--button-bg-color);
+  color: var(--primary-text-color);
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: var(--button-hover-bg-color);
+}
+
+/* General container styles */
+.container {
+  padding: 20px;
+  background-color: var(--secondary-bg-color);
+  border-radius: 10px;
+}
+
+/* App Specific Styles Merged from App.css */
 .App {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
+.top-header {
+  background-color: var(--secondary-bg-color);
+  color: var(--primary-text-color);
+  padding: 20px;
+  font-size: 14px;
+}
+
 .main-body {
-  background-color: green; /* Green color for body */
-  color: black;
   flex-grow: 1;
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
 }
 
 .wordle-container {
@@ -43,10 +99,71 @@ body,
 }
 
 .popup-message {
-  background-color: #444;
-  color: #fff;
+  background-color: var(--absent-bg-color);
+  color: var(--primary-text-color);
   padding: 10px;
   border-radius: 5px;
   margin-top: 20px;
 }
 
+.grid {
+  display: grid;
+  gap: 5px;
+}
+
+.cell {
+  width: 50px;
+  height: 50px;
+  border: 2px solid var(--accent-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  background-color: var(--accent-color);
+  color: var(--primary-text-color);
+}
+
+.cell.correct {
+  background-color: var(--correct-bg-color);
+}
+
+.cell.present {
+  background-color: var(--present-bg-color);
+}
+
+.cell.absent {
+  background-color: var(--absent-bg-color);
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.keyboard-row {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+.key-button {
+  padding: 10px 15px;
+  font-size: 18px;
+  background-color: var(--accent-color);
+  color: var(--primary-text-color);
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.key-button:active {
+  background-color: var(--button-hover-bg-color);
+}
+
+.bottom-footer {
+  background-color: var(--secondary-bg-color);
+  color: var(--primary-text-color);
+  padding: 20px;
+  font-size: 14px;
+  text-align: left;
+}

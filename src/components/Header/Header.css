@@ -1,25 +1,48 @@
 /* ./src/components/Header/Header.css */
-/* Local Styles for Header */
-.top-header {
-  background-color: #777; /* Gray color for the top header */
-  color: #e0e0e0; /* Light color for text */
+
+@import url('../../styles/global.css');
+
+.header {
+  background-color: var(--secondary-bg-color);
+  color: var(--primary-text-color);
   padding: 20px;
-  font-size: 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 2px solid var(--accent-color);
 }
 
-.refresh-button {
-  padding: 10px;
-  font-size: 16px;
-  background-color: #444;
-  color: #fff;
+.header-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.header-button {
+  background-color: var(--button-bg-color);
+  color: var(--primary-text-color);
+  padding: 10px 15px;
   border: none;
   cursor: pointer;
+  border-radius: 5px;
   transition: background-color 0.3s;
 }
 
-.refresh-button:hover {
-  background-color: #666;
+.header-button:hover {
+  background-color: var(--button-hover-bg-color);
+}
+
+.header-links {
+  display: flex;
+  gap: 15px;
+}
+
+.header-link {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.header-link:hover {
+  color: var(--button-hover-bg-color);
 }
