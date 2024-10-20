@@ -23,7 +23,7 @@ const WordleGrid = ({ handleVirtualKeyClick, handleKeyProcessed }) => {
 
   const [keyStatuses, setKeyStatuses] = useState({});
 
-  const updateKeyStatuses = (letter, status) => {
+  const updateKeyStatuses = useCallback((letter, status) => {
     setKeyStatuses((prevStatuses) => {
       // Always update to 'correct' if it's correct
       if (status === 'correct') {
@@ -48,42 +48,23 @@ const WordleGrid = ({ handleVirtualKeyClick, handleKeyProcessed }) => {
       }
       return prevStatuses;
     });
-  };
+  }, []);
 
-  const handleKeyPress = useCallback((key) => {
-    if (key === 'ENTER') {
-      handleEnterInternal();
-      if (currentGuess.length === wordToGuess.length) {
-        // Create a map to track letter counts in wordToGuess
-        const letterCount = {};
-        wordToGuess.split('').forEach((letter) => {
-          letterCount[letter] = (letterCount[letter] || 0) + 1;
-        });
-
-        // First pass to mark correct letters
-        currentGuess.split('').forEach((letter, index) => {
-          if (wordToGuess[index] === letter) {
-            updateKeyStatuses(letter, 'correct');
-            letterCount[letter] -= 1;
-          }
-        });
-
-        // Second pass to mark present letters
-        currentGuess.split('').forEach((letter, index) => {
-          if (wordToGuess[index] !== letter && letterCount[letter] > 0) {
-            updateKeyStatuses(letter, 'present');
-            letterCount[letter] -= 1;
-          } else if (!wordToGuess.includes(letter)) {
-            updateKeyStatuses(letter, 'absent');
-          }
-        });
+  const handleKeyPress = useCallback(
+    (key) => {
+      if (key === 'ENTER') {
+        if (currentGuess.length === wordToGuess.length) {
+          handleEnterInternal();
+          updateKeyStatuses(currentGuess);
+        }
+      } else if (key === 'BACKSPACE') {
+        handleDeleteInternal();
+      } else if (/^[A-Z]$/.test(key)) {
+        setCurrentGuess((prev) => (prev.length < 5 ? prev + key : prev));
       }
-    } else if (key === 'BACKSPACE') {
-      handleDeleteInternal();
-    } else if (/^[A-Z]$/.test(key)) {
-      setCurrentGuess((prev) => (prev.length < 5 ? prev + key : prev));
-    }
-  }, [handleEnterInternal, handleDeleteInternal, setCurrentGuess, currentGuess, wordToGuess]);
+    },
+    [handleEnterInternal, handleDeleteInternal, setCurrentGuess, currentGuess, wordToGuess, updateKeyStatuses]
+  );
 
   useInputHandler(handleKeyPress);
 
@@ -106,7 +87,7 @@ const WordleGrid = ({ handleVirtualKeyClick, handleKeyProcessed }) => {
             currentGuess={currentGuess}
             wordToGuess={wordToGuess}
             flippingCells={flippingCells}
-            updateKeyStatuses={updateKeyStatuses}
+            updateKeyStatuses={updateKeyStatuses} // Added updateKeyStatuses prop
           />
         ))}
       </div>

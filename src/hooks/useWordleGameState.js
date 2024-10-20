@@ -26,17 +26,32 @@ function useWordleGameState() {
   const updateLetterStates = useCallback((guess) => {
     setKeyStatuses((prevKeyStatuses) => {
       const newKeyStatuses = { ...prevKeyStatuses };
+      const letterCount = {};
 
-      for (let i = 0; i < guess.length; i++) {
-        const letter = guess[i];
-        if (wordToGuess[i] === letter) {
+      // Create a map to track letter counts in wordToGuess
+      wordToGuess.split('').forEach((letter) => {
+        letterCount[letter] = (letterCount[letter] || 0) + 1;
+      });
+
+      // First pass to mark correct letters
+      guess.split('').forEach((letter, index) => {
+        if (wordToGuess[index] === letter) {
           newKeyStatuses[letter] = 'correct';
-        } else if (wordToGuess.includes(letter) && newKeyStatuses[letter] !== 'correct') {
-          newKeyStatuses[letter] = 'present';
+          letterCount[letter] -= 1;
+        }
+      });
+
+      // Second pass to mark present letters
+      guess.split('').forEach((letter, index) => {
+        if (wordToGuess[index] !== letter && letterCount[letter] > 0) {
+          if (newKeyStatuses[letter] !== 'correct') {
+            newKeyStatuses[letter] = 'present';
+          }
+          letterCount[letter] -= 1;
         } else if (!wordToGuess.includes(letter)) {
           newKeyStatuses[letter] = 'absent';
         }
-      }
+      });
 
       return newKeyStatuses;
     });

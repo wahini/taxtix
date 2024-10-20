@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 import './VirtualKeyboard.css';
 
 const KeyButton = ({ keyLabel, handleClick, gameOver, keyColor }) => {
-  const handleClickEvent = useCallback(() => {
+  // Unified event handler to handle both touch and click events without duplication
+  const handleClickEvent = useCallback((e) => {
+    e.preventDefault(); // Prevent any default action for the click or touch
     if (!gameOver) {
       handleClick();
     }
@@ -13,7 +15,7 @@ const KeyButton = ({ keyLabel, handleClick, gameOver, keyColor }) => {
 
   const getKeyClass = () => {
     if (keyColor === 'correct') return 'key-button correct';
-    if (keyColor === 'present') return 'key-button present';
+    if (keyColor === 'present') return 'key-button present'; // Make sure present status is applied if correct is not.
     if (keyColor === 'absent') return 'key-button absent';
     return 'key-button';
   };
@@ -22,7 +24,11 @@ const KeyButton = ({ keyLabel, handleClick, gameOver, keyColor }) => {
     <button
       className={`${getKeyClass()} ${keyLabel === 'ENTER' ? 'enter-button' : ''}`}
       onClick={handleClickEvent}
-      onTouchStart={handleClickEvent} // Added touch handling for mobile
+      onTouchEnd={(e) => {
+        // Handle touchEnd instead of touchStart to avoid triggering the event twice
+        e.preventDefault(); // Prevent touch event propagation
+        handleClickEvent(e);
+      }} // Using touchEnd to ensure that click and touch are not triggered at the same time
       disabled={gameOver}
       style={{ flex: '1', padding: '15px', maxWidth: '40px', fontSize: '18px', fontWeight: 'bold' }}
     >
