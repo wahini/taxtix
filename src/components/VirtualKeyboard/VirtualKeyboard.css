@@ -1,5 +1,6 @@
 /* ./src/components/VirtualKeyboard/VirtualKeyboard.css */
 
+/* Local Styles for VirtualKeyboard */
 .keyboard {
   display: flex;
   flex-direction: column;
@@ -47,17 +48,17 @@
 }
 
 .key-button.correct {
-  background-color: #538d4e; /* Green for correct letters */
+  background-color: green;
   animation: correct-key-animate 0.5s ease-in-out;
 }
 
 .key-button.present {
-  background-color: #b59f3b; /* Yellow for present letters */
+  background-color: orange;
   animation: present-key-animate 0.5s ease-in-out;
 }
 
 .key-button.absent {
-  background-color: #3a3a3c; /* Dark Gray for absent letters */
+  background-color: #444;
   animation: absent-key-animate 0.5s ease-in-out;
 }
 

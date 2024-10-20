@@ -1,5 +1,3 @@
-/* ./src/components/WordleGrid/WordleGrid.js */
-
 import React, { useEffect, useCallback } from 'react';
 import useInputHandler from '../../utils/InputHandler';
 import './WordleGrid.css';

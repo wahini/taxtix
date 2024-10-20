@@ -1,30 +1,10 @@
 /* ./src/components/Footer/Footer.css */
-
-@import url('../../styles/global.css');
-
-.footer {
-  background-color: var(--secondary-bg-color);
-  color: var(--primary-text-color);
+/* Local Styles for Footer */
+.bottom-footer {
+  background-color: #777; /* Gray color for the footer */
+  color: #e0e0e0; /* Light color for text */
   padding: 20px;
-  text-align: center;
   font-size: 14px;
-  border-top: 2px solid var(--accent-color);
-}
-
-.footer-links {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.footer-link {
-  color: var(--accent-color);
-  text-decoration: none;
-  transition: color 0.3s;
-  font-size: 16px;
-}
-
-.footer-link:hover {
-  color: var(--button-hover-bg-color);
+  text-align: left;
+  width: 100%;
 }

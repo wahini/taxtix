@@ -1,7 +1,8 @@
-// ./src/hooks/useWordleGameState.js
+// /src/hooks/useWordleGameState.js
 
 import { useState, useCallback } from 'react';
 import wordListData from '../data/wordList.json';
+
 
 function useWordleGameState() {
   const [wordToGuess] = useState(() => getRandomWord());
@@ -10,7 +11,6 @@ function useWordleGameState() {
   const [currentAttempt, setCurrentAttempt] = useState(0);
   const [popupMessage, setPopupMessage] = useState('');
   const [flippingCells, setFlippingCells] = useState([]);
-  const [keyStatuses, setKeyStatuses] = useState({});
 
   function getRandomWord() {
     return wordListData[Math.floor(Math.random() * wordListData.length)];
@@ -22,26 +22,6 @@ function useWordleGameState() {
       setPopupMessage('');
     }, 1000);
   }, []);
-
-  const updateLetterStates = useCallback((guess) => {
-    setKeyStatuses((prevKeyStatuses) => {
-      const newKeyStatuses = { ...prevKeyStatuses };
-
-      for (let i = 0; i < guess.length; i++) {
-        const letter = guess[i];
-        if (wordToGuess[i] === letter) {
-          newKeyStatuses[letter] = 'correct';
-        } else if (wordToGuess.includes(letter) && newKeyStatuses[letter] !== 'correct') {
-          newKeyStatuses[letter] = 'present';
-        } else if (!wordToGuess.includes(letter)) {
-          newKeyStatuses[letter] = 'absent';
-        }
-      }
-
-      console.log('Updated Key Statuses:', newKeyStatuses); // Debugging line to check updated statuses
-      return newKeyStatuses;
-    });
-  }, [wordToGuess]);
 
   const handleEnterInternal = useCallback(() => {
     if (currentGuess.length !== 5) return;
@@ -60,7 +40,6 @@ function useWordleGameState() {
       });
 
       setFlippingCells([]);
-      updateLetterStates(currentGuess);
 
       if (currentGuess === wordToGuess) {
         showPopup('Congratulations! You guessed the word!');
@@ -71,7 +50,7 @@ function useWordleGameState() {
         showPopup('Game Over! The correct word was: ' + wordToGuess);
       }
     }, 600);
-  }, [currentGuess, currentAttempt, wordToGuess, showPopup, updateLetterStates]);
+  }, [currentGuess, currentAttempt, wordToGuess, showPopup]);
 
   const handleDeleteInternal = useCallback(() => {
     setCurrentGuess((prev) => prev.slice(0, -1));
@@ -89,10 +68,7 @@ function useWordleGameState() {
     handleEnterInternal,
     handleDeleteInternal,
     showPopup,
-    keyStatuses
   };
 }
 
 export default useWordleGameState;
-
-// Ensure that the `keyStatuses` is being passed down to the `VirtualKeyboard` and updated after each guess to visually reflect the correct, present, and absent states of keys.
