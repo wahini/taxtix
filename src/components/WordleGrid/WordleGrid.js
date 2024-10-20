@@ -1,11 +1,12 @@
 /* ./src/components/WordleGrid/WordleGrid.js */
 
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import useInputHandler from '../../utils/InputHandler';
 import './WordleGrid.css';
 import GridRow from './GridRow';
 import PopupMessage from './PopupMessage';
 import useWordleGameState from '../../hooks/useWordleGameState';
+import VirtualKeyboard from '../VirtualKeyboard/VirtualKeyboard';
 
 const WordleGrid = ({ handleVirtualKeyClick, handleKeyProcessed }) => {
   const {
@@ -20,25 +21,76 @@ const WordleGrid = ({ handleVirtualKeyClick, handleKeyProcessed }) => {
     handleDeleteInternal,
   } = useWordleGameState();
 
-  // Wrap `handleKeyPress` in useCallback to ensure it is memoized
+  const [keyStatuses, setKeyStatuses] = useState({});
+
+  const updateKeyStatuses = (letter, status) => {
+    setKeyStatuses((prevStatuses) => {
+      // Always update to 'correct' if it's correct
+      if (status === 'correct') {
+        return {
+          ...prevStatuses,
+          [letter]: 'correct',
+        };
+      }
+      // Update to 'present' only if it hasn't been marked 'correct' before
+      if (status === 'present' && prevStatuses[letter] !== 'correct') {
+        return {
+          ...prevStatuses,
+          [letter]: 'present',
+        };
+      }
+      // Update to 'absent' only if it hasn't been marked as 'correct' or 'present'
+      if (status === 'absent' && !prevStatuses[letter]) {
+        return {
+          ...prevStatuses,
+          [letter]: 'absent',
+        };
+      }
+      return prevStatuses;
+    });
+  };
+
   const handleKeyPress = useCallback((key) => {
     if (key === 'ENTER') {
       handleEnterInternal();
+      if (currentGuess.length === wordToGuess.length) {
+        // Create a map to track letter counts in wordToGuess
+        const letterCount = {};
+        wordToGuess.split('').forEach((letter) => {
+          letterCount[letter] = (letterCount[letter] || 0) + 1;
+        });
+
+        // First pass to mark correct letters
+        currentGuess.split('').forEach((letter, index) => {
+          if (wordToGuess[index] === letter) {
+            updateKeyStatuses(letter, 'correct');
+            letterCount[letter] -= 1;
+          }
+        });
+
+        // Second pass to mark present letters
+        currentGuess.split('').forEach((letter, index) => {
+          if (wordToGuess[index] !== letter && letterCount[letter] > 0) {
+            updateKeyStatuses(letter, 'present');
+            letterCount[letter] -= 1;
+          } else if (!wordToGuess.includes(letter)) {
+            updateKeyStatuses(letter, 'absent');
+          }
+        });
+      }
     } else if (key === 'BACKSPACE') {
       handleDeleteInternal();
     } else if (/^[A-Z]$/.test(key)) {
       setCurrentGuess((prev) => (prev.length < 5 ? prev + key : prev));
     }
-  }, [handleEnterInternal, handleDeleteInternal, setCurrentGuess]);
+  }, [handleEnterInternal, handleDeleteInternal, setCurrentGuess, currentGuess, wordToGuess]);
 
-  // Use custom hook to handle real keyboard input
   useInputHandler(handleKeyPress);
 
-  // Handle virtual keyboard input
   useEffect(() => {
     if (handleVirtualKeyClick) {
       handleKeyPress(handleVirtualKeyClick);
-      handleKeyProcessed(); // Clear the virtual key after processing
+      handleKeyProcessed();
     }
   }, [handleVirtualKeyClick, handleKeyPress, handleKeyProcessed]);
 
@@ -54,10 +106,18 @@ const WordleGrid = ({ handleVirtualKeyClick, handleKeyProcessed }) => {
             currentGuess={currentGuess}
             wordToGuess={wordToGuess}
             flippingCells={flippingCells}
+            updateKeyStatuses={updateKeyStatuses}
           />
         ))}
       </div>
       {popupMessage && <PopupMessage message={popupMessage} />}
+      <VirtualKeyboard
+        handleKeyClick={handleKeyPress}
+        handleEnter={handleEnterInternal}
+        handleDelete={handleDeleteInternal}
+        gameOver={false}
+        keyStatuses={keyStatuses}
+      />
     </div>
   );
 };

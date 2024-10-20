@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Cell from './Cell';
 
-const GridRow = ({ row, rowIndex, currentAttempt, currentGuess, wordToGuess, flippingCells }) => {
+const GridRow = ({ row, rowIndex, currentAttempt, currentGuess, wordToGuess, flippingCells, updateKeyStatuses }) => {
   return (
     <div className="row" style={{ display: 'flex', gap: '5px' }}>
       {row.map((letter, letterIndex) => (
@@ -17,6 +17,7 @@ const GridRow = ({ row, rowIndex, currentAttempt, currentGuess, wordToGuess, fli
           currentGuess={currentGuess}
           wordToGuess={wordToGuess}
           flippingCells={flippingCells}
+          updateKeyStatuses={updateKeyStatuses}
         />
       ))}
     </div>
@@ -30,6 +31,7 @@ GridRow.propTypes = {
   currentGuess: PropTypes.string.isRequired,
   wordToGuess: PropTypes.string.isRequired,
   flippingCells: PropTypes.array.isRequired,
+  updateKeyStatuses: PropTypes.func.isRequired,
 };
 
 export default GridRow;

@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import Header from './components/Header/Header';
 import WordleGrid from './components/WordleGrid/WordleGrid';
-import VirtualKeyboard from './components/VirtualKeyboard/VirtualKeyboard';
+// import VirtualKeyboard from './components/VirtualKeyboard/VirtualKeyboard';
 import Footer from './components/Footer/Footer';
 import './App.css';
 import './styles/global.css';
@@ -14,9 +14,9 @@ function App() {
     gameOver,
     setGameOver,
     virtualKey,
-    handleVirtualKeyClick,
-    handleEnter,
-    handleDelete,
+    // handleVirtualKeyClick,
+    // handleEnter,
+    // handleDelete,
     handleKeyProcessed,
     keyStatuses,
   } = useGameLogic();
@@ -39,13 +39,13 @@ function App() {
           setGameOver={setGameOver}
           handleKeyProcessed={handleKeyProcessed}
         />
-        <VirtualKeyboard
+        {/* <VirtualKeyboard
           handleKeyClick={handleVirtualKeyClick}
           handleEnter={handleEnter}
           handleDelete={handleDelete}
           gameOver={gameOver}
           keyStatuses={keyStatuses}
-        />
+        /> */}
       </main>
       <Footer />
     </div>
