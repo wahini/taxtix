@@ -4,7 +4,7 @@ import './Header.css';
 
 const Header = ({ handleRefresh }) => (
   <header className="top-header">
-    {/* <button className="refresh-button" onClick={handleRefresh}>Refresh</button> */}
+    <h1>Welcome to Pajax</h1>
   </header>
 );
 

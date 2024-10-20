@@ -51,9 +51,9 @@ const VirtualKeyboard = ({ handleKeyClick, handleEnter, handleDelete, gameOver, 
 
   const handleClick = useCallback((key) => {
     console.log(`Handle click for key: ${key}`); // Debug log for handling key click
-    if (key === 'DELETE') {
+    if (key === '⌫') {
       handleDelete();
-    } else if (key === 'ENTER') {
+    } else if (key === 'ENTER' || key === '⏎') {
       handleEnter();
     } else {
       handleKeyClick(key);
