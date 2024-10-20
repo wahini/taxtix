@@ -7,14 +7,16 @@
   color: var(--primary-text-color);
   padding: 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* Centers the header content horizontally */
   align-items: center;
   border-bottom: 2px solid var(--accent-color);
+  text-align: center; /* Ensures text inside is also centered */
 }
 
 .header-title {
   font-size: 24px;
   font-weight: bold;
+  width: 100%; /* Allows the title to fully utilize the header width */
 }
 
 .header-button {
@@ -34,6 +36,7 @@
 .header-links {
   display: flex;
   gap: 15px;
+  justify-content: center; /* Centering links in the header */
 }
 
 .header-link {

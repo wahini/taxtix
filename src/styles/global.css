@@ -93,7 +93,7 @@ button:hover {
   flex-direction: column;
   gap: 20px;
   width: 100%;
-  max-width: 600px;
+  max-width: 500px; /* Reduced from 600px to match Localhost size */
   margin: 0 auto;
   margin-bottom: 30px; /* Add space between guess box and keyboard */
 }
@@ -112,8 +112,8 @@ button:hover {
 }
 
 .cell {
-  width: 50px;
-  height: 50px;
+  width: 45px; /* Reduced size to be consistent with smaller screen */
+  height: 45px;
   border: 2px solid var(--accent-color);
   display: flex;
   align-items: center;
