@@ -106,7 +106,8 @@ function useWordleGameState() {
     handleEnterInternal,
     handleDeleteInternal,
     showPopup,
-    keyStatuses
+    keyStatuses,
+    setPopupMessage, // Added to expose setPopupMessage for external usage
   };
 }
 

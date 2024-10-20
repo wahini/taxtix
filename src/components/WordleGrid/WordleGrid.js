@@ -1,4 +1,4 @@
-/* Suggested Directory: ./src/components/WordleGrid/WordleGrid.js */
+// components/WordleGrid/WordleGrid.js
 
 import React, { useEffect, useCallback, useState } from 'react';
 import useInputHandler from '../../utils/InputHandler';
@@ -7,6 +7,7 @@ import GridRow from './GridRow';
 import PopupMessage from './PopupMessage';
 import useWordleGameState from '../../hooks/useWordleGameState';
 import VirtualKeyboard from '../VirtualKeyboard/VirtualKeyboard';
+import wordList from '../../data/wordList.json'; // Import the word list
 
 const WordleGrid = ({ handleVirtualKeyClick, handleKeyProcessed }) => {
   const {
@@ -16,6 +17,7 @@ const WordleGrid = ({ handleVirtualKeyClick, handleKeyProcessed }) => {
     setCurrentGuess,
     currentAttempt,
     popupMessage,
+    setPopupMessage, // Use setPopupMessage to show popup messages
     flippingCells,
     handleEnterInternal,
     handleDeleteInternal,
@@ -23,47 +25,48 @@ const WordleGrid = ({ handleVirtualKeyClick, handleKeyProcessed }) => {
 
   const [keyStatuses, setKeyStatuses] = useState({});
 
-  const updateKeyStatuses = useCallback((letter, status) => {
+  const isWordValid = (word) => wordList.includes(word); // Check if the word is in the word list
+
+  const updateKeyStatuses = useCallback((guess) => {
     setKeyStatuses((prevStatuses) => {
-      // Always update to 'correct' if it's correct
-      if (status === 'correct') {
-        return {
-          ...prevStatuses,
-          [letter]: 'correct',
-        };
+      const newStatuses = { ...prevStatuses };
+      for (let i = 0; i < guess.length; i++) {
+        const guessChar = guess[i];
+        if (wordToGuess[i] === guessChar) {
+          newStatuses[guessChar] = 'correct';
+        } else if (wordToGuess.includes(guessChar)) {
+          if (newStatuses[guessChar] !== 'correct') {
+            newStatuses[guessChar] = 'present';
+          }
+        } else {
+          if (!newStatuses[guessChar]) {
+            newStatuses[guessChar] = 'absent';
+          }
+        }
       }
-      // Update to 'present' only if it hasn't been marked 'correct' before
-      if (status === 'present' && prevStatuses[letter] !== 'correct') {
-        return {
-          ...prevStatuses,
-          [letter]: 'present',
-        };
-      }
-      // Update to 'absent' only if it hasn't been marked as 'correct' or 'present'
-      if (status === 'absent' && !prevStatuses[letter]) {
-        return {
-          ...prevStatuses,
-          [letter]: 'absent',
-        };
-      }
-      return prevStatuses;
+      return newStatuses;
     });
-  }, []);
+  }, [wordToGuess]);
 
   const handleKeyPress = useCallback(
     (key) => {
       if (key === 'ENTER') {
         if (currentGuess.length === wordToGuess.length) {
-          handleEnterInternal();
-          updateKeyStatuses(currentGuess);
+          if (isWordValid(currentGuess)) { // Only proceed if the word is valid
+            handleEnterInternal();
+            updateKeyStatuses(currentGuess); // Only update key statuses after pressing ENTER and validating the word
+          } else {
+            // Show a popup message that the word is invalid
+            setPopupMessage(`"${currentGuess}" bukan kata yang valid`);
+          }
         }
       } else if (key === 'BACKSPACE') {
         handleDeleteInternal();
       } else if (/^[A-Z]$/.test(key)) {
-        setCurrentGuess((prev) => (prev.length < 5 ? prev + key : prev));
+        setCurrentGuess((prev) => (prev.length < wordToGuess.length ? prev + key : prev));
       }
     },
-    [handleEnterInternal, handleDeleteInternal, setCurrentGuess, currentGuess, wordToGuess, updateKeyStatuses]
+    [handleEnterInternal, handleDeleteInternal, setCurrentGuess, currentGuess, wordToGuess, updateKeyStatuses, setPopupMessage]
   );
 
   useInputHandler(handleKeyPress);
@@ -73,7 +76,7 @@ const WordleGrid = ({ handleVirtualKeyClick, handleKeyProcessed }) => {
       handleKeyPress(handleVirtualKeyClick);
       handleKeyProcessed();
     }
-  }, [handleVirtualKeyClick, handleKeyPress, handleKeyProcessed]);
+  }, [handleVirtualKeyClick, handleKeyProcessed, handleKeyPress]); // Added handleKeyPress to dependencies
 
   return (
     <div className="wordle-container">
@@ -84,14 +87,14 @@ const WordleGrid = ({ handleVirtualKeyClick, handleKeyProcessed }) => {
             row={row}
             rowIndex={rowIndex}
             currentAttempt={currentAttempt}
-            currentGuess={currentGuess}
+            currentGuess={rowIndex === currentAttempt ? currentGuess : ''}
             wordToGuess={wordToGuess}
             flippingCells={flippingCells}
-            updateKeyStatuses={updateKeyStatuses} // Added updateKeyStatuses prop
+            updateKeyStatuses={rowIndex === currentAttempt - 1 ? updateKeyStatuses : undefined} // Only pass updateKeyStatuses for validated guesses
           />
         ))}
       </div>
-      {popupMessage && <PopupMessage message={popupMessage} />}
+      {popupMessage && <PopupMessage message={popupMessage} />} {/* Ensure PopupMessage displays correctly */}
       <VirtualKeyboard
         handleKeyClick={handleKeyPress}
         handleEnter={handleEnterInternal}

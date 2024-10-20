@@ -6,7 +6,7 @@ import Cell from './Cell';
 
 const GridRow = ({ row, rowIndex, currentAttempt, currentGuess, wordToGuess, flippingCells, updateKeyStatuses }) => {
   useEffect(() => {
-    if (rowIndex === currentAttempt - 1) {
+    if (updateKeyStatuses && rowIndex === currentAttempt - 1) {
       // After completing a guess, update the key statuses
       const letterCount = {};
       wordToGuess.split('').forEach((letter) => {
@@ -58,7 +58,7 @@ GridRow.propTypes = {
   currentGuess: PropTypes.string.isRequired,
   wordToGuess: PropTypes.string.isRequired,
   flippingCells: PropTypes.array.isRequired,
-  updateKeyStatuses: PropTypes.func.isRequired,
+  updateKeyStatuses: PropTypes.func,
 };
 
 export default GridRow;
