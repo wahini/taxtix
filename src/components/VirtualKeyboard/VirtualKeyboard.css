@@ -21,7 +21,8 @@
   padding: 15px;
   font-size: 18px;
   font-weight: bold;
-  border: none;
+  border: 2px solid transparent; /* Default border to maintain size consistency */
+  box-sizing: border-box; /* Ensure border is included in button size */
   background-color: #777;
   color: #fff;
   cursor: pointer;
