@@ -1,9 +1,9 @@
-/* ./src/components/WordleGrid/Cell.js */
+/* Suggested Directory: ./src/components/WordleGrid/Cell.js */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-const Cell = ({ letter, rowIndex, letterIndex, currentAttempt, currentGuess, wordToGuess, flippingCells, updateKeyStatuses }) => {
+const Cell = ({ letter, rowIndex, letterIndex, currentAttempt, currentGuess, wordToGuess, flippingCells }) => {
   const getClassName = () => {
     if (flippingCells.includes(letterIndex) && rowIndex === currentAttempt) {
       return 'flipping';
@@ -20,12 +20,6 @@ const Cell = ({ letter, rowIndex, letterIndex, currentAttempt, currentGuess, wor
   };
 
   const className = getClassName();
-
-  useEffect(() => {
-    if (className && rowIndex < currentAttempt) {
-      updateKeyStatuses(letter, className);
-    }
-  }, [className, letter, rowIndex, currentAttempt, updateKeyStatuses]);
 
   return (
     <div
@@ -47,7 +41,6 @@ Cell.propTypes = {
   currentGuess: PropTypes.string.isRequired,
   wordToGuess: PropTypes.string.isRequired,
   flippingCells: PropTypes.array.isRequired,
-  updateKeyStatuses: PropTypes.func.isRequired,
 };
 
 export default Cell;

@@ -1,4 +1,4 @@
-// ./src/hooks/useWordleGameState.js
+// Suggested Directory: ./src/hooks/useWordleGameState.js
 
 import { useState, useCallback } from 'react';
 import wordListData from '../data/wordList.json';
@@ -16,11 +16,11 @@ function useWordleGameState() {
     return wordListData[Math.floor(Math.random() * wordListData.length)];
   }
 
-  const showPopup = useCallback((message) => {
+  const showPopup = useCallback((message, duration = 1000) => {
     setPopupMessage(message);
     setTimeout(() => {
       setPopupMessage('');
-    }, 1000);
+    }, duration);
   }, []);
 
   const updateLetterStates = useCallback((guess) => {
@@ -38,16 +38,18 @@ function useWordleGameState() {
         }
       }
 
-      console.log('Updated Key Statuses:', newKeyStatuses); // Debugging line to check updated statuses
       return newKeyStatuses;
     });
   }, [wordToGuess]);
 
   const handleEnterInternal = useCallback(() => {
-    if (currentGuess.length !== 5) return;
+    if (currentGuess.length !== 5) {
+      showPopup('Silakan lengkapi semua kotak terlebih dahulu!', 1500);
+      return;
+    }
 
     if (!wordListData.includes(currentGuess)) {
-      showPopup(`"${currentGuess}" is not a valid word`);
+      showPopup(`"${currentGuess}" bukan kata yang valid`, 1500);
       return;
     }
 
@@ -63,12 +65,12 @@ function useWordleGameState() {
       updateLetterStates(currentGuess);
 
       if (currentGuess === wordToGuess) {
-        showPopup('Congratulations! You guessed the word!');
+        showPopup('Selamat! Anda berhasil menebak kata!', 3000);
       } else if (currentAttempt < 5) {
         setCurrentAttempt((prev) => prev + 1);
         setCurrentGuess('');
       } else {
-        showPopup('Game Over! The correct word was: ' + wordToGuess);
+        showPopup('Permainan selesai! Kata yang benar adalah: ' + wordToGuess, 3000);
       }
     }, 600);
   }, [currentGuess, currentAttempt, wordToGuess, showPopup, updateLetterStates]);
@@ -94,5 +96,3 @@ function useWordleGameState() {
 }
 
 export default useWordleGameState;
-
-// Ensure that the `keyStatuses` is being passed down to the `VirtualKeyboard` and updated after each guess to visually reflect the correct, present, and absent states of keys.

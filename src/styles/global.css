@@ -1,4 +1,4 @@
-/* global.css - Combined Global Dark Theme Styles with App.css Merged */
+/* Suggested Directory: ./src/styles/global.css */
 
 :root {
   --primary-bg-color: #121213; /* Very Dark Gray, almost black */
@@ -35,6 +35,17 @@ body,
 .App {
   height: 100%;
   overflow: hidden; /* Prevents scrolling */
+}
+
+a:visited {
+  color: var(--primary-text-color); /* Ensure visited links have the same color as regular links */
+  text-decoration: none; /* Remove underline from visited links */
+  font-weight: bold; /* Make links bold */
+}
+
+a {
+  text-decoration: none; /* Remove underline from regular links */
+  font-weight: bold; /* Make links bold */
 }
 
 code {
