@@ -1,4 +1,4 @@
-// components/WordleGrid/WordleGrid.js
+// Suggested Directory: ./src/components/WordleGrid/WordleGrid.js
 
 import React, { useEffect, useCallback, useState } from 'react';
 import useInputHandler from '../../utils/InputHandler';
@@ -17,18 +17,20 @@ const WordleGrid = ({ handleVirtualKeyClick, handleKeyProcessed }) => {
     setCurrentGuess,
     currentAttempt,
     popupMessage,
-    setPopupMessage, // Use setPopupMessage to show popup messages
+    setPopupMessage,
     flippingCells,
     handleEnterInternal,
     handleDeleteInternal,
+    keyStatuses,
+    updateLetterStates,
   } = useWordleGameState();
 
-  const [keyStatuses, setKeyStatuses] = useState({});
+  const [keyStatusesLocal, setKeyStatusesLocal] = useState(keyStatuses);
 
   const isWordValid = (word) => wordList.includes(word); // Check if the word is in the word list
 
   const updateKeyStatuses = useCallback((guess) => {
-    setKeyStatuses((prevStatuses) => {
+    setKeyStatusesLocal((prevStatuses) => {
       const newStatuses = { ...prevStatuses };
       for (let i = 0; i < guess.length; i++) {
         const guessChar = guess[i];
@@ -78,6 +80,10 @@ const WordleGrid = ({ handleVirtualKeyClick, handleKeyProcessed }) => {
     }
   }, [handleVirtualKeyClick, handleKeyProcessed, handleKeyPress]); // Added handleKeyPress to dependencies
 
+  useEffect(() => {
+    setKeyStatusesLocal(keyStatuses); // Sync key statuses from game state
+  }, [keyStatuses]);
+
   return (
     <div className="wordle-container">
       <div className="grid" style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}>
@@ -100,7 +106,7 @@ const WordleGrid = ({ handleVirtualKeyClick, handleKeyProcessed }) => {
         handleEnter={handleEnterInternal}
         handleDelete={handleDeleteInternal}
         gameOver={false}
-        keyStatuses={keyStatuses}
+        keyStatuses={keyStatusesLocal}
       />
     </div>
   );

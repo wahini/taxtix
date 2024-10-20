@@ -23,7 +23,7 @@ function useWordleGameState() {
     }, duration);
   }, []);
 
-  const updateLetterStates = useCallback((guess) => {
+  const updateLetterStates = (guess) => {
     setKeyStatuses((prevKeyStatuses) => {
       const newKeyStatuses = { ...prevKeyStatuses };
       const letterCount = {};
@@ -55,7 +55,7 @@ function useWordleGameState() {
 
       return newKeyStatuses;
     });
-  }, [wordToGuess]);
+  };
 
   const handleEnterInternal = useCallback(() => {
     if (currentGuess.length !== 5) {
@@ -77,7 +77,7 @@ function useWordleGameState() {
       });
 
       setFlippingCells([]);
-      updateLetterStates(currentGuess);
+      updateLetterStates(currentGuess); // Update letter states immediately after a guess
 
       if (currentGuess === wordToGuess) {
         showPopup('Selamat! Anda berhasil menebak kata!', 3000);
@@ -88,7 +88,7 @@ function useWordleGameState() {
         showPopup('Permainan selesai! Kata yang benar adalah: ' + wordToGuess, 3000);
       }
     }, 600);
-  }, [currentGuess, currentAttempt, wordToGuess, showPopup, updateLetterStates]);
+  }, [currentGuess, currentAttempt, wordToGuess, showPopup]);
 
   const handleDeleteInternal = useCallback(() => {
     setCurrentGuess((prev) => prev.slice(0, -1));
@@ -107,7 +107,7 @@ function useWordleGameState() {
     handleDeleteInternal,
     showPopup,
     keyStatuses,
-    setPopupMessage, // Added to expose setPopupMessage for external usage
+    setPopupMessage,
   };
 }
 

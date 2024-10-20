@@ -2,12 +2,12 @@
 
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import debounce from 'lodash/debounce';
 import './VirtualKeyboard.css';
 
 const KeyButton = ({ keyLabel, handleClick, gameOver, keyColor }) => {
-  // Unified event handler to handle both touch and click events without duplication
   const handleClickEvent = useCallback((e) => {
-    e.preventDefault(); // Prevent any default action for the click or touch
+    e.preventDefault();
     if (!gameOver) {
       handleClick();
     }
@@ -15,7 +15,7 @@ const KeyButton = ({ keyLabel, handleClick, gameOver, keyColor }) => {
 
   const getKeyClass = () => {
     if (keyColor === 'correct') return 'key-button correct';
-    if (keyColor === 'present') return 'key-button present'; // Make sure present status is applied if correct is not.
+    if (keyColor === 'present') return 'key-button present';
     if (keyColor === 'absent') return 'key-button absent';
     return 'key-button';
   };
@@ -23,12 +23,8 @@ const KeyButton = ({ keyLabel, handleClick, gameOver, keyColor }) => {
   return (
     <button
       className={`${getKeyClass()} ${keyLabel === 'ENTER' ? 'enter-button' : ''}`}
-      onClick={handleClickEvent}
-      onTouchEnd={(e) => {
-        // Handle touchEnd instead of touchStart to avoid triggering the event twice
-        e.preventDefault(); // Prevent touch event propagation
-        handleClickEvent(e);
-      }} // Using touchEnd to ensure that click and touch are not triggered at the same time
+      onPointerUp={handleClickEvent} // Replaced onClick and onTouchEnd with onPointerUp
+      onClick={handleClickEvent} // Added fallback for onClick in case pointer events aren't consistently handled on certain devices
       disabled={gameOver}
       style={{ flex: '1', padding: '15px', maxWidth: '40px', fontSize: '18px', fontWeight: 'bold' }}
     >
@@ -51,15 +47,18 @@ const VirtualKeyboard = ({ handleKeyClick, handleEnter, handleDelete, gameOver, 
     ['⌫', ...'ZXCVBNM'.split(''), '⏎']
   ];
 
-  const handleClick = useCallback((key) => {
-    if (key === '⌫') {
-      handleDelete();
-    } else if (key === 'ENTER' || key === '⏎') {
-      handleEnter();
-    } else {
-      handleKeyClick(key);
-    }
-  }, [handleDelete, handleEnter, handleKeyClick]);
+  const handleClick = useCallback(
+    debounce((key) => {
+      if (key === '⌫') {
+        handleDelete();
+      } else if (key === 'ENTER' || key === '⏎') {
+        handleEnter();
+      } else {
+        handleKeyClick(key);
+      }
+    }, 100), // Adjusted debounce timing to 100ms for better responsiveness on mobile
+    [handleDelete, handleEnter, handleKeyClick]
+  );
 
   const getKeyColor = (key) => {
     return keyStatuses && keyStatuses[key] ? keyStatuses[key] : '';
