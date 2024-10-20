@@ -22,6 +22,7 @@ const KeyButton = ({ keyLabel, handleClick, gameOver, keyColor }) => {
     <button
       className={`${getKeyClass()} ${keyLabel === 'ENTER' ? 'enter-button' : ''}`}
       onClick={handleClickEvent}
+      onTouchStart={handleClickEvent} // Added touch handling for mobile
       disabled={gameOver}
       style={{ flex: '1', padding: '15px', maxWidth: '40px', fontSize: '18px', fontWeight: 'bold' }}
     >

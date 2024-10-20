@@ -1,4 +1,4 @@
-/* ./src/components/WordleGrid/WordleGrid.js */
+/* Suggested Directory: ./src/components/WordleGrid/WordleGrid.js */
 
 import React, { useEffect, useCallback, useState } from 'react';
 import useInputHandler from '../../utils/InputHandler';

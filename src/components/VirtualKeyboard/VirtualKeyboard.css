@@ -87,26 +87,26 @@
 /* Media Queries */
 @media (max-width: 768px) {
   .key-button {
-    padding: 12px;
-    font-size: 16px;
-    max-width: 45px;
-    min-width: 35px;
+    padding: 16px; /* Increased from 12px */
+    font-size: 18px; /* Increased from 16px */
+    max-width: 55px; /* Increased from 45px */
+    min-width: 40px; /* Increased from 35px */
   }
 
   .enter-button {
-    max-width: 45px;
+    max-width: 55px; /* Increased from 45px */
   }
 }
 
 @media (max-width: 480px) {
   .key-button {
-    padding: 10px;
-    font-size: 14px;
-    max-width: 40px;
-    min-width: 30px;
+    padding: 14px; /* Increased from 10px */
+    font-size: 16px; /* Increased from 14px */
+    max-width: 50px; /* Increased from 40px */
+    min-width: 35px; /* Increased from 30px */
   }
 
   .enter-button {
-    max-width: 40px;
+    max-width: 50px; /* Increased from 40px */
   }
 }
