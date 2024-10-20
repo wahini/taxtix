@@ -21,8 +21,7 @@ const WordleGrid = ({ handleVirtualKeyClick, handleKeyProcessed }) => {
     flippingCells,
     handleEnterInternal,
     handleDeleteInternal,
-    keyStatuses,
-    updateLetterStates,
+    keyStatuses
   } = useWordleGameState();
 
   const [keyStatusesLocal, setKeyStatusesLocal] = useState(keyStatuses);
@@ -71,14 +70,15 @@ const WordleGrid = ({ handleVirtualKeyClick, handleKeyProcessed }) => {
     [handleEnterInternal, handleDeleteInternal, setCurrentGuess, currentGuess, wordToGuess, updateKeyStatuses, setPopupMessage]
   );
 
-  useInputHandler(handleKeyPress);
+  // Enable physical keyboard input only if handleVirtualKeyClick is not used
+  useInputHandler(handleKeyPress, !handleVirtualKeyClick);
 
   useEffect(() => {
     if (handleVirtualKeyClick) {
       handleKeyPress(handleVirtualKeyClick);
       handleKeyProcessed();
     }
-  }, [handleVirtualKeyClick, handleKeyProcessed, handleKeyPress]); // Added handleKeyPress to dependencies
+  }, [handleVirtualKeyClick, handleKeyProcessed, handleKeyPress]);
 
   useEffect(() => {
     setKeyStatusesLocal(keyStatuses); // Sync key statuses from game state
@@ -102,7 +102,10 @@ const WordleGrid = ({ handleVirtualKeyClick, handleKeyProcessed }) => {
       </div>
       {popupMessage && <PopupMessage message={popupMessage} />} {/* Ensure PopupMessage displays correctly */}
       <VirtualKeyboard
-        handleKeyClick={handleKeyPress}
+        handleKeyClick={(key) => {
+          handleKeyPress(key);
+          handleKeyProcessed(); // Ensure the key is marked as processed to avoid double input
+        }}
         handleEnter={handleEnterInternal}
         handleDelete={handleDeleteInternal}
         gameOver={false}

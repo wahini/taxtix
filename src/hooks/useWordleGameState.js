@@ -23,7 +23,7 @@ function useWordleGameState() {
     }, duration);
   }, []);
 
-  const updateLetterStates = (guess) => {
+  const updateLetterStates = useCallback((guess) => {
     setKeyStatuses((prevKeyStatuses) => {
       const newKeyStatuses = { ...prevKeyStatuses };
       const letterCount = {};
@@ -55,7 +55,7 @@ function useWordleGameState() {
 
       return newKeyStatuses;
     });
-  };
+  }, [wordToGuess]);
 
   const handleEnterInternal = useCallback(() => {
     if (currentGuess.length !== 5) {
@@ -88,7 +88,7 @@ function useWordleGameState() {
         showPopup('Permainan selesai! Kata yang benar adalah: ' + wordToGuess, 3000);
       }
     }, 600);
-  }, [currentGuess, currentAttempt, wordToGuess, showPopup]);
+  }, [currentGuess, currentAttempt, wordToGuess, showPopup, updateLetterStates]);
 
   const handleDeleteInternal = useCallback(() => {
     setCurrentGuess((prev) => prev.slice(0, -1));
