@@ -8,7 +8,10 @@ const useInputHandler = (handleKeyPress, enablePhysicalKeyboard = true) => {
 
     const handleKeyboardInput = (event) => {
       const key = event.key.toUpperCase();
-      handleKeyPress(key);
+      // Check for valid input keys (A-Z and special keys like Enter, Backspace)
+      if (/^[A-Z]$/.test(key) || key === 'ENTER' || key === 'BACKSPACE') {
+        handleKeyPress(key);
+      }
     };
 
     window.addEventListener('keydown', handleKeyboardInput);

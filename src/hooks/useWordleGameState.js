@@ -1,27 +1,51 @@
 // Suggested Directory: ./src/hooks/useWordleGameState.js
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import wordListData from '../data/wordList.json';
+import messageListData from '../data/messageList.json'; // Import message list for welcome messages
 
 function useWordleGameState() {
   const [wordToGuess] = useState(() => getRandomWord());
   const [guesses, setGuesses] = useState(Array(6).fill('').map(() => Array(5).fill('')));
   const [currentGuess, setCurrentGuess] = useState('');
   const [currentAttempt, setCurrentAttempt] = useState(0);
-  const [popupMessage, setPopupMessage] = useState('');
+  const [currentMessage, setCurrentMessage] = useState('');
   const [flippingCells, setFlippingCells] = useState([]);
   const [keyStatuses, setKeyStatuses] = useState({});
+
+  const messageTimeout = useRef(null);
 
   function getRandomWord() {
     return wordListData[Math.floor(Math.random() * wordListData.length)];
   }
 
-  const showPopup = useCallback((message, duration = 1000) => {
-    setPopupMessage(message);
-    setTimeout(() => {
-      setPopupMessage('');
-    }, duration);
+  const getRandomWelcomeMessage = useCallback(() => {
+    return messageListData.welcomeMessages[Math.floor(Math.random() * messageListData.welcomeMessages.length)];
   }, []);
+
+  const getRandomMotivationalMessage = useCallback(() => {
+    return messageListData.motivationalMessages[Math.floor(Math.random() * messageListData.motivationalMessages.length)];
+  }, []);
+
+  // Show a random welcome message when the game starts
+  useEffect(() => {
+    setCurrentMessage(getRandomWelcomeMessage());
+  }, [getRandomWelcomeMessage]);
+
+  const clearMessage = useCallback(() => {
+    if (messageTimeout.current) {
+      clearTimeout(messageTimeout.current);
+    }
+    setCurrentMessage('');
+  }, []);
+
+  const setTemporaryMessage = useCallback((message, duration = 3000) => {
+    clearMessage(); // Clear any previous message before setting a new one
+    setCurrentMessage(message);
+    messageTimeout.current = setTimeout(() => {
+      setCurrentMessage('');
+    }, duration);
+  }, [clearMessage]);
 
   const updateLetterStates = useCallback((guess) => {
     setKeyStatuses((prevKeyStatuses) => {
@@ -59,12 +83,13 @@ function useWordleGameState() {
 
   const handleEnterInternal = useCallback(() => {
     if (currentGuess.length !== 5) {
-      showPopup('Silakan lengkapi semua kotak terlebih dahulu!', 1500);
+      setTemporaryMessage(messageListData.errorMessages.incompleteGuess);
       return;
     }
 
-    if (!wordListData.includes(currentGuess)) {
-      showPopup(`"${currentGuess}" bukan kata yang valid`, 1500);
+    if (!wordListData.includes(currentGuess.toUpperCase())) { // Ensure the comparison is case insensitive
+      const formattedMessage = messageListData.errorMessages.wordNotFound.replace("{word}", currentGuess);
+      setTemporaryMessage(formattedMessage); // Explicitly set the message here
       return;
     }
 
@@ -80,18 +105,29 @@ function useWordleGameState() {
       updateLetterStates(currentGuess); // Update letter states immediately after a guess
 
       if (currentGuess === wordToGuess) {
-        showPopup('Selamat! Anda berhasil menebak kata!', 3000);
+        setTemporaryMessage(messageListData.successMessages.correctGuess);
       } else if (currentAttempt < 5) {
         setCurrentAttempt((prev) => prev + 1);
         setCurrentGuess('');
+        setTemporaryMessage(getRandomMotivationalMessage());
       } else {
-        showPopup('Permainan selesai! Kata yang benar adalah: ' + wordToGuess, 3000);
+        setTemporaryMessage(`${messageListData.endMessages.gameOver} ${wordToGuess}`);
       }
     }, 600);
-  }, [currentGuess, currentAttempt, wordToGuess, showPopup, updateLetterStates]);
+  }, [currentGuess, currentAttempt, wordToGuess, updateLetterStates, setTemporaryMessage, getRandomMotivationalMessage]);
 
   const handleDeleteInternal = useCallback(() => {
     setCurrentGuess((prev) => prev.slice(0, -1));
+    clearMessage();
+  }, [clearMessage]);
+
+  useEffect(() => {
+    return () => {
+      // Clear timeout when component unmounts
+      if (messageTimeout.current) {
+        clearTimeout(messageTimeout.current);
+      }
+    };
   }, []);
 
   return {
@@ -101,13 +137,12 @@ function useWordleGameState() {
     setCurrentGuess,
     currentAttempt,
     setCurrentAttempt,
-    popupMessage,
+    currentMessage,
     flippingCells,
     handleEnterInternal,
     handleDeleteInternal,
-    showPopup,
     keyStatuses,
-    setPopupMessage,
+    setMessage: setCurrentMessage,
   };
 }
 

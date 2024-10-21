@@ -5,7 +5,7 @@ import './Header.css';
 
 const Header = ({ handleRefresh }) => (
   <header className="header">
-    {/* <h1 className="header-title">Welcome to Pajax</h1> */}
+    {/* <h1 className="header-title">TAXTIX</h1> */}
   </header>
 );
 

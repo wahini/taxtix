@@ -1,0 +1,26 @@
+{
+  "welcomeMessages": [
+    "Tebak TAXTIX sekarang!",
+    "CETAK CETOK, main TAXTIX!",
+    "Klik-Klik, mulai TAXTIX!",
+    "Mulai tebak kata, yuk!",
+    "Mulai TAXTIX!",
+    "Tebak kata di atas!"
+  ],
+  "errorMessages": {
+    "incompleteGuess": "Jawaban belum lengkap!",
+    "wordNotFound": "{word} tidak ditemukan!"
+  },
+  "successMessages": {
+    "correctGuess": "Selamat! Anda menang!"
+  },
+  "motivationalMessages": [
+    "Ayo coba lagi!",
+    "Tetap semangat!",
+    "Jangan menyerah, kamu pasti bisa!",
+    "Coba lagi, pasti ketemu!"
+  ],
+  "endMessages": {
+    "gameOver": "Permainan selesai! Kata yang benar adalah: "
+  }
+}

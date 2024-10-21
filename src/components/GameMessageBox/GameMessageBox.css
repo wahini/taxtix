@@ -1,0 +1,29 @@
+/* . src/components/GameMessageBox/GameMessageBox.css  */
+
+.game-message-box {
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #333; /* Updated to match the global style used in WordleGrid */
+  max-width: 600px;
+  color: #fff; /* Updated to match the color in the WordleGrid component */
+  min-height: 40px; /* Minimum height to ensure the box is always visible */
+}
+
+
+.game-message {
+  font-size: 1.2rem;
+  color: #fff; /* Ensure text is visible against the dark background */
+  font-weight: 600; /* Match the bold font weight used in grid cells */
+}
+
+/* Optional addition to match animations if necessary */
+@keyframes message-highlight {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.game-message-box.highlight {
+  animation: message-highlight 0.6s ease-in-out;
+}
