@@ -8,6 +8,7 @@ import Footer from './components/Footer/Footer';
 import './App.css';
 import './styles/global.css';
 import useGameLogic from './hooks/useGameLogic';
+import useWindowSize from './hooks/useWindowSize';
 
 function App() {
   const {
@@ -16,6 +17,9 @@ function App() {
     virtualKey,
     handleKeyProcessed,
   } = useGameLogic();
+
+  const size = useWindowSize();
+  const isCompact = size.width < 400;
 
   return (
     <HelmetProvider>
@@ -37,6 +41,7 @@ function App() {
             gameOver={gameOver}
             setGameOver={setGameOver}
             handleKeyProcessed={handleKeyProcessed}
+            compact={isCompact} // Pass compact prop to adjust for small screens
           />
         </main>
         <Footer />

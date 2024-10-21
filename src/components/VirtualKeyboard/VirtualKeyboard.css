@@ -3,44 +3,44 @@
 .keyboard {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px; /* Reduced gap to make the layout more compact */
   width: 100%;
-  max-width: 600px;
+  max-width: 500px; /* Reduce max width for better fit on smaller screens */
   margin: 0 auto;
-  padding: 0 10px;
+  padding: 0 5px;
 }
 
 .keyboard-row {
   display: flex;
-  gap: 5px;
+  gap: 3px; /* Reduce gap between keys */
   justify-content: center;
 }
 
 .key-button {
   flex: 1;
-  padding: 15px;
-  font-size: 18px;
+  padding: 10px; /* Reduced padding for smaller keys */
+  font-size: 16px; /* Reduced font size for better fit */
   font-weight: bold;
   border: 2px solid transparent; /* Default border to maintain size consistency */
   box-sizing: border-box; /* Ensure border is included in button size */
   background-color: #777;
   color: #fff;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 6px; /* Slightly smaller border radius */
   transition: none; /* Removed transition for immediate update on key color */
-  max-width: 60px;
-  min-width: 40px;
+  max-width: 50px;
+  min-width: 35px;
   text-align: center;
   line-height: 1.2;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1); /* Slightly smaller shadow for compact look */
 }
 
 .key-button:active {
   background-color: #555;
-  transform: translateY(2px);
+  transform: translateY(1px); /* Reduced translate value to minimize key press effect */
 }
 
 .key-button.correct {
@@ -57,27 +57,14 @@
 }
 
 .enter-button {
-  flex: 1.5;
-  max-width: 60px;
+  flex: 1.2; /* Reduced size to prevent it from being too large */
+  max-width: 50px;
 }
 
 /* Media Queries */
 @media (max-width: 768px) {
   .key-button {
-    padding: 12px;
-    font-size: 16px;
-    max-width: 45px;
-    min-width: 35px;
-  }
-
-  .enter-button {
-    max-width: 45px;
-  }
-}
-
-@media (max-width: 480px) {
-  .key-button {
-    padding: 10px;
+    padding: 8px;
     font-size: 14px;
     max-width: 40px;
     min-width: 30px;
@@ -85,5 +72,18 @@
 
   .enter-button {
     max-width: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .key-button {
+    padding: 6px;
+    font-size: 12px;
+    max-width: 35px;
+    min-width: 25px;
+  }
+
+  .enter-button {
+    max-width: 35px;
   }
 }

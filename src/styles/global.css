@@ -85,13 +85,13 @@ button:hover {
 .top-header {
   background-color: var(--secondary-bg-color);
   color: var(--primary-text-color);
-  padding: 20px;
+  padding: 10px; /* Reduced padding to save space */
   font-size: 14px;
 }
 
 .main-body {
   flex-grow: 1;
-  padding: 20px;
+  padding: 15px; /* Adjusted padding for better fit */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -105,9 +105,9 @@ button:hover {
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 8px; /* Reduced gap for more compact layout */
   width: 100%;
-  max-width: 500px; /* Reduced from 600px to match Localhost size */
+  max-width: 340px; /* Adjusted size for better responsiveness */
   margin: 0 auto;
   flex-shrink: 0;
 }
@@ -115,26 +115,27 @@ button:hover {
 .popup-message {
   background-color: var(--absent-bg-color);
   color: var(--primary-text-color);
-  padding: 10px;
+  padding: 8px;
   border-radius: 5px;
+  font-size: 0.9rem; /* Adjusted font size for smaller screens */
 }
 
 .grid {
   display: grid;
-  gap: 5px;
+  gap: 3px; /* Reduced gap to make cells closer */
 }
 
 .cell {
-  width: 45px; /* Reduced size to be consistent with smaller screen */
-  height: 45px;
+  width: 32px; /* Reduced size for better mobile fit */
+  height: 32px;
   border: 2px solid var(--accent-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 18px; /* Adjusted font size for smaller cells */
   background-color: var(--accent-color);
   color: var(--primary-text-color);
-  border-radius: 5px;
+  border-radius: 4px;
 }
 
 .cell.correct {
@@ -152,24 +153,24 @@ button:hover {
 .keyboard {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px; /* Reduced gap for keys */
   margin-top: auto;
   flex-shrink: 0;
 }
 
 .keyboard-row {
   display: flex;
-  gap: 5px;
+  gap: 2px; /* Reduced gap for better fit on smaller screens */
   justify-content: center;
 }
 
 .key-button {
-  padding: 10px 15px;
-  font-size: 18px;
+  padding: 5px 8px; /* Reduced padding for better mobile fit */
+  font-size: 13px; /* Reduced font size to fit smaller screens */
   background-color: var(--accent-color);
   color: var(--primary-text-color);
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 4px;
 }
 
 .key-button:active {
@@ -179,9 +180,28 @@ button:hover {
 .bottom-footer {
   background-color: var(--secondary-bg-color);
   color: var(--primary-text-color);
-  padding: 20px;
-  font-size: 14px;
+  padding: 8px; /* Reduced padding to save space */
+  font-size: 12px; /* Adjusted font size for smaller screens */
   text-align: center;
   flex-shrink: 0;
   width: 100%;
+}
+
+/* Media Queries for Small Screens */
+@media (max-width: 375px) {
+  .wordle-container {
+    max-width: 320px; /* Further reduce the size for smaller screens */
+  }
+  .cell {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+  }
+  .key-button {
+    padding: 4px 6px;
+    font-size: 12px;
+  }
+  .popup-message {
+    font-size: 0.8rem;
+  }
 }
