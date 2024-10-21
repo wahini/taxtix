@@ -3,9 +3,10 @@
 @import url('../../styles/global.css');
 
 .footer {
-  background-color: var(--secondary-bg-color);
+  /* background-color: var(--secondary-bg-color); */
   color: var(--primary-text-color);
   padding: 20px;
+  padding-bottom: 40px;
   text-align: center;
   font-size: 14px;
   /* border-top: 2px solid var(--accent-color); */
@@ -19,12 +20,25 @@
 }
 
 .footer-link {
-  color: var(--accent-color);
+  color: var(--accent-color); /* Set color for all link states */
   text-decoration: none;
   transition: color 0.3s;
   font-size: 16px;
 }
 
+/* Link states to ensure consistent color in all scenarios */
+.footer-link:link {
+  color: var(--accent-color);
+}
+
+.footer-link:visited {
+  color: var(--accent-color); /* Maintain the same color for visited links */
+}
+
 .footer-link:hover {
   color: var(--button-hover-bg-color);
+}
+
+.footer-link:active {
+  color: var(--button-hover-bg-color); /* Set color when link is active/clicked */
 }

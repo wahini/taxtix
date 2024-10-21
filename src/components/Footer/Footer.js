@@ -6,7 +6,7 @@ import './Footer.css';
 function Footer() {
   return (
     <footer className="footer">
-      <p>Developed by <a href="https://vitoatmo.com">Vito Atmo</a></p>
+      <p>Develop by <a href="https://vitoatmo.com">Vito Atmo</a></p>
     </footer>
   );
 }
