@@ -1,11 +1,15 @@
 // Suggested Directory: ./src/hooks/useWordleGameState.js
 
 import { useState, useCallback, useEffect, useRef } from 'react';
+import hewanListData from '../data/hewanList.json';
 import wordListData from '../data/wordList.json';
 import messageListData from '../data/messageList.json'; // Import message list for welcome messages
 
-function useWordleGameState() {
-  const [wordToGuess] = useState(() => getRandomWord());
+function useWordleGameState(mode = 'Hewan') {
+  // Select the appropriate word list based on the mode
+  const wordList = mode === 'Pajak' ? wordListData : hewanListData;
+
+  const [wordToGuess] = useState(() => getRandomWord(wordList));
   const [guesses, setGuesses] = useState(Array(6).fill('').map(() => Array(5).fill('')));
   const [currentGuess, setCurrentGuess] = useState('');
   const [currentAttempt, setCurrentAttempt] = useState(0);
@@ -15,8 +19,8 @@ function useWordleGameState() {
 
   const messageTimeout = useRef(null);
 
-  function getRandomWord() {
-    return wordListData[Math.floor(Math.random() * wordListData.length)];
+  function getRandomWord(list) {
+    return list[Math.floor(Math.random() * list.length)];
   }
 
   const getRandomWelcomeMessage = useCallback(() => {
@@ -87,7 +91,7 @@ function useWordleGameState() {
       return;
     }
 
-    if (!wordListData.includes(currentGuess.toUpperCase())) { // Ensure the comparison is case insensitive
+    if (!wordList.includes(currentGuess.toUpperCase())) { // Ensure the comparison is case insensitive
       const formattedMessage = messageListData.errorMessages.wordNotFound.replace("{word}", currentGuess);
       setTemporaryMessage(formattedMessage); // Explicitly set the message here
       return;
@@ -114,7 +118,7 @@ function useWordleGameState() {
         setTemporaryMessage(`${messageListData.endMessages.gameOver} ${wordToGuess}`);
       }
     }, 600);
-  }, [currentGuess, currentAttempt, wordToGuess, updateLetterStates, setTemporaryMessage, getRandomMotivationalMessage]);
+  }, [currentGuess, currentAttempt, wordToGuess, updateLetterStates, setTemporaryMessage, getRandomMotivationalMessage, wordList]);
 
   const handleDeleteInternal = useCallback(() => {
     setCurrentGuess((prev) => prev.slice(0, -1));
