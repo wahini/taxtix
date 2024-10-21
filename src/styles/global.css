@@ -34,8 +34,6 @@ body,
 #root,
 .App {
   height: 100%;
-  display: flex;
-  flex-direction: column;
   overflow: hidden; /* Prevents scrolling */
 }
 
@@ -98,7 +96,6 @@ button:hover {
   justify-content: center;
   background-color: var(--primary-bg-color);
   color: var(--primary-text-color);
-  overflow-y: auto;
 }
 
 .wordle-container {
@@ -109,7 +106,7 @@ button:hover {
   width: 100%;
   max-width: 340px; /* Adjusted size for better responsiveness */
   margin: 0 auto;
-  flex-shrink: 0;
+  /* margin-bottom: 30px; */
 }
 
 .popup-message {
@@ -118,6 +115,7 @@ button:hover {
   padding: 8px;
   border-radius: 5px;
   font-size: 0.9rem; /* Adjusted font size for smaller screens */
+  margin-top: 20px; /* Ensure proper spacing for visibility */
 }
 
 .grid {
