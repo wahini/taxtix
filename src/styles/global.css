@@ -34,7 +34,7 @@ body,
 #root,
 .App {
   height: 100%;
-  overflow: hidden; /* Prevents scrolling */
+  /* overflow: hidden; */
 }
 
 a:visited {

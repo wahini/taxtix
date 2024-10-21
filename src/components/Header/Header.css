@@ -3,9 +3,9 @@
 @import url('../../styles/global.css');
 
 .header {
-  background-color: var(--secondary-bg-color);
+  /* background-color: var(--secondary-bg-color); */
   color: var(--primary-text-color);
-  padding: 20px;
+  padding: 5px;
   display: flex;
   justify-content: center; /* Centers the header content horizontally */
   align-items: center;
