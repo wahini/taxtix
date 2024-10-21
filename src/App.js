@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-// import Header from './components/Header/Header';
+import Header from './components/Header/Header';
 import WordleGrid from './components/WordleGrid/WordleGrid';
 import Footer from './components/Footer/Footer';
 import './App.css';
@@ -33,7 +33,7 @@ function App() {
           <meta name="publisher" content="Atmo Intelligence" />
           <html lang="id" />
         </Helmet>
-        {/* <Header /> */}
+        <Header />
         <main className="main-body">
           {/* <h1>TAXTIX</h1> */}
           <WordleGrid
