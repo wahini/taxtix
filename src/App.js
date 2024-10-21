@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import Header from './components/Header/Header';
+// import Header from './components/Header/Header';
 import WordleGrid from './components/WordleGrid/WordleGrid';
-import Footer from './components/Footer/Footer';
+// import Footer from './components/Footer/Footer';
 import './App.css';
 import './styles/global.css';
 import useGameLogic from './hooks/useGameLogic';
@@ -33,9 +33,9 @@ function App() {
           <meta name="publisher" content="Atmo Intelligence" />
           <html lang="id" />
         </Helmet>
-        <Header />
+        {/* <Header /> */}
         <main className="main-body">
-          <h1>TAXTIX</h1>
+          {/* <h1>TAXTIX</h1> */}
           <WordleGrid
             handleVirtualKeyClick={virtualKey}
             gameOver={gameOver}
@@ -44,7 +44,7 @@ function App() {
             compact={isCompact} // Pass compact prop to adjust for small screens
           />
         </main>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </HelmetProvider>
   );
