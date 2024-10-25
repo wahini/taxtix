@@ -17,11 +17,13 @@ function getLetterStatuses(wordToGuess, currentGuess) {
     }
   });
 
-  // Second pass: Mark present letters
+  // Second pass: Mark present letters only if there are occurrences left
   currentGuess.split('').forEach((letter, index) => {
     if (result[index] !== 'correct' && letterCount[letter] > 0) {
-      result[index] = 'present';
-      letterCount[letter] -= 1; // Reduce count for present letter
+      if (wordToGuess.includes(letter)) {
+        result[index] = 'present';
+        letterCount[letter] -= 1; // Reduce count for present letter
+      }
     }
   });
 
