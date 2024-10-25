@@ -1,34 +1,18 @@
-/* ./src/components/WordleGrid/GridRow.js */
+// ./src/components/WordleGrid/GridRow.js
 
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Cell from './Cell';
+import getLetterStatuses from '../../utils/getLetterStatuses';
 
 const GridRow = ({ row, rowIndex, currentAttempt, currentGuess, wordToGuess, flippingCells, updateKeyStatuses }) => {
   useEffect(() => {
     if (updateKeyStatuses && rowIndex === currentAttempt - 1) {
-      // After completing a guess, update the key statuses
-      const letterCount = {};
-      wordToGuess.split('').forEach((letter) => {
-        letterCount[letter] = (letterCount[letter] || 0) + 1;
-      });
+      const statuses = getLetterStatuses(wordToGuess, currentGuess);
 
-      // First pass to mark correct letters
+      // Update key statuses based on the result
       currentGuess.split('').forEach((letter, index) => {
-        if (wordToGuess[index] === letter) {
-          updateKeyStatuses(letter, 'correct');
-          letterCount[letter] -= 1;
-        }
-      });
-
-      // Second pass to mark present letters
-      currentGuess.split('').forEach((letter, index) => {
-        if (wordToGuess[index] !== letter && letterCount[letter] > 0) {
-          updateKeyStatuses(letter, 'present');
-          letterCount[letter] -= 1;
-        } else if (!wordToGuess.includes(letter)) {
-          updateKeyStatuses(letter, 'absent');
-        }
+        updateKeyStatuses(letter, statuses[index]);
       });
     }
   }, [currentAttempt, currentGuess, rowIndex, wordToGuess, updateKeyStatuses]);
@@ -45,6 +29,7 @@ const GridRow = ({ row, rowIndex, currentAttempt, currentGuess, wordToGuess, fli
           currentGuess={currentGuess}
           wordToGuess={wordToGuess}
           flippingCells={flippingCells}
+          status={getLetterStatuses(wordToGuess, currentGuess)[letterIndex]} // Pass the status to the Cell
         />
       ))}
     </div>
