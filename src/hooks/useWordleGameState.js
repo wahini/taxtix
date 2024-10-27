@@ -55,7 +55,7 @@ function useWordleGameState() {
     setCurrentMessage('');
   }, []);
 
-  const setTemporaryMessage = useCallback((message, duration = 3000) => {
+  const setTemporaryMessage = useCallback((message, duration = 1000) => { // Changed duration to 1 second
     clearMessage(); // Clear any previous message before setting a new one
     setCurrentMessage(message);
     setMessageKey('temporary'); // Set message key to temporary to track temporary messages
@@ -128,7 +128,7 @@ function useWordleGameState() {
       } else if (currentAttempt < 5) {
         setCurrentAttempt((prev) => prev + 1);
         setCurrentGuess('');
-        setTemporaryMessage(getRandomMotivationalMessage()); // Show a motivational message after incorrect attempt
+        setTemporaryMessage(getRandomMotivationalMessage(), 1000); // Changed duration to 1 second
       } else {
         setMessageKey('lose');
         setCurrentMessage(`${messageListData.endMessages.gameOver} ${wordToGuess}`);
