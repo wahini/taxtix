@@ -1,23 +1,34 @@
-// Suggested Directory: ./src/hooks/useWordleGameState.js
+// Updated useWordleGameState.js to integrate word clues into the game
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 import wordListData from '../data/wordList.json';
+import wordCluesData from '../data/wordClues.json'; // Import word clues
 import messageListData from '../data/messageList.json'; // Import message list for welcome messages
 
 function useWordleGameState() {
+  const getRandomWord = useCallback(() => {
+    return wordListData[Math.floor(Math.random() * wordListData.length)];
+  }, []);
+
+  const getRandomClueForWord = useCallback((word) => {
+    const clues = wordCluesData[word];
+    if (clues && clues.length > 0) {
+      return clues[Math.floor(Math.random() * clues.length)];
+    }
+    return '';
+  }, []);
+
   const [wordToGuess] = useState(() => getRandomWord());
+  const [clueForWord] = useState(() => getRandomClueForWord(wordToGuess)); // Lock the clue for the word
   const [guesses, setGuesses] = useState(Array(6).fill('').map(() => Array(5).fill('')));
   const [currentGuess, setCurrentGuess] = useState('');
   const [currentAttempt, setCurrentAttempt] = useState(0);
+  const [messageKey, setMessageKey] = useState('clue'); // Track which message should be displayed
   const [currentMessage, setCurrentMessage] = useState('');
   const [flippingCells, setFlippingCells] = useState([]);
   const [keyStatuses, setKeyStatuses] = useState({});
 
   const messageTimeout = useRef(null);
-
-  function getRandomWord() {
-    return wordListData[Math.floor(Math.random() * wordListData.length)];
-  }
 
   const getRandomWelcomeMessage = useCallback(() => {
     return messageListData.welcomeMessages[Math.floor(Math.random() * messageListData.welcomeMessages.length)];
@@ -27,10 +38,15 @@ function useWordleGameState() {
     return messageListData.motivationalMessages[Math.floor(Math.random() * messageListData.motivationalMessages.length)];
   }, []);
 
-  // Show a random welcome message when the game starts
+  // Show a random welcome message, and set the clue as the default message right after
   useEffect(() => {
-    setCurrentMessage(getRandomWelcomeMessage());
-  }, [getRandomWelcomeMessage]);
+    const welcomeMessage = getRandomWelcomeMessage();
+    setCurrentMessage(welcomeMessage);
+    messageTimeout.current = setTimeout(() => {
+      setMessageKey('clue'); // Set the message key to clue after the welcome message
+      setCurrentMessage(clueForWord);
+    }, 1000); // Display the welcome message for 1 second, then show the clue
+  }, [clueForWord, getRandomWelcomeMessage]);
 
   const clearMessage = useCallback(() => {
     if (messageTimeout.current) {
@@ -42,10 +58,12 @@ function useWordleGameState() {
   const setTemporaryMessage = useCallback((message, duration = 3000) => {
     clearMessage(); // Clear any previous message before setting a new one
     setCurrentMessage(message);
+    setMessageKey('temporary'); // Set message key to temporary to track temporary messages
     messageTimeout.current = setTimeout(() => {
-      setCurrentMessage('');
+      setMessageKey('clue'); // Revert to clue message after temporary message
+      setCurrentMessage(clueForWord);
     }, duration);
-  }, [clearMessage]);
+  }, [clearMessage, clueForWord]);
 
   const updateLetterStates = useCallback((guess) => {
     setKeyStatuses((prevKeyStatuses) => {
@@ -105,21 +123,25 @@ function useWordleGameState() {
       updateLetterStates(currentGuess); // Update letter states immediately after a guess
 
       if (currentGuess === wordToGuess) {
-        setTemporaryMessage(messageListData.successMessages.correctGuess);
+        setMessageKey('win');
+        setCurrentMessage(messageListData.successMessages.correctGuess);
       } else if (currentAttempt < 5) {
         setCurrentAttempt((prev) => prev + 1);
         setCurrentGuess('');
-        setTemporaryMessage(getRandomMotivationalMessage());
+        setTemporaryMessage(getRandomMotivationalMessage()); // Show a motivational message after incorrect attempt
       } else {
-        setTemporaryMessage(`${messageListData.endMessages.gameOver} ${wordToGuess}`);
+        setMessageKey('lose');
+        setCurrentMessage(`${messageListData.endMessages.gameOver} ${wordToGuess}`);
       }
     }, 600);
   }, [currentGuess, currentAttempt, wordToGuess, updateLetterStates, setTemporaryMessage, getRandomMotivationalMessage]);
 
   const handleDeleteInternal = useCallback(() => {
     setCurrentGuess((prev) => prev.slice(0, -1));
-    clearMessage();
-  }, [clearMessage]);
+    if (messageKey !== 'temporary') {
+      setCurrentMessage(clueForWord); // Always show the locked clue if not a temporary message
+    }
+  }, [clueForWord, messageKey]);
 
   useEffect(() => {
     return () => {
