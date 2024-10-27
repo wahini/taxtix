@@ -12,7 +12,8 @@
     "wordNotFound": "{word} tidak ditemukan!"
   },
   "successMessages": {
-    "correctGuess": "Selamat! Anda menang!"
+    "correctGuess": "Selamat! Anda menang!",
+    "winInTries": "Berhasil dalam {tries} kali percobaan!"
   },
   "motivationalMessages": [
     "Ayo coba lagi!",

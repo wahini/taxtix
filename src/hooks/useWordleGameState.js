@@ -1,4 +1,4 @@
-// Updated useWordleGameState.js to integrate word clues into the game
+// Updated useWordleGameState.js to integrate win message with number of tries
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 import wordListData from '../data/wordList.json';
@@ -124,7 +124,23 @@ function useWordleGameState() {
 
       if (currentGuess === wordToGuess) {
         setMessageKey('win');
-        setCurrentMessage(messageListData.successMessages.correctGuess);
+        const winMessages = [
+          messageListData.successMessages.correctGuess,
+          messageListData.successMessages.winInTries.replace("{tries}", currentAttempt + 1)
+        ];
+        let currentIndex = 0;
+
+        const showNextMessage = () => {
+          if (currentIndex < winMessages.length) {
+            setCurrentMessage(winMessages[currentIndex]);
+            messageTimeout.current = setTimeout(() => {
+              currentIndex++;
+              showNextMessage();
+            }, 1000); // Set each success message to display for 1 second
+          }
+        };
+
+        showNextMessage();
       } else if (currentAttempt < 5) {
         setCurrentAttempt((prev) => prev + 1);
         setCurrentGuess('');
