@@ -1,62 +1,151 @@
 {
-  "AUDIT": ["kontrol dokumen", "cek data", "evaluasi fiskal"],
-  "AKTIF": ["status terdaftar", "operasional berjalan", "nomor valid"],
   "AJUAN": ["permohonan dana", "permintaan fiskal", "dokumen klaim"],
+
   "AKSES": ["portal online", "izin sistem", "masuk data"],
+
+  "AKTIF": ["status terdaftar", "operasional berjalan", "nomor valid"],
+
+  "ANGKA": ["nilai numerik", "jumlah kuantitas", "data statistik"],
+
+  "AUDIT": ["kontrol dokumen", "cek data", "evaluasi fiskal"],
+
   "BADAN": ["entitas usaha", "kelompok bisnis", "organisasi resmi"],
+
+  "BAKAL": ["perkiraan pajak", "kewajiban mendatang", "rencana pembayaran"],
+
   "BATAS": ["tenggat waktu", "periode akhir", "akhir pelaporan"],
+
   "BAYAR": ["transfer fiskal", "setoran resmi", "proses pelunasan"],
+
   "BEBAN": ["tanggungan fiskal", "pengurangan biaya", "kewajiban finansial"],
+
+  "BIDIK": ["target fiskal", "penilaian pajak", "evaluasi pendapatan"],
+
   "BIAYA": ["pengeluaran usaha", "deduksi fiskal", "potongan resmi"],
+
   "BONUS": ["insentif tahunan", "pendapatan ekstra", "hadiah usaha"],
-  "BUNGA": ["denda pinjaman", "imbal hasil", "biaya keterlambatan"],
+
   "BRUTO": ["jumlah kotor", "total pendapatan", "pendapatan sebelum pajak"],
+
   "BUKTI": ["arsip transaksi", "dokumen fiskal", "formulir resmi"],
-  "CUKAI": ["tarif produk", "biaya konsumsi", "pajak barang"],
+
+  "BUNGA": ["denda pinjaman", "imbal hasil", "biaya keterlambatan"],
+
   "CATAT": ["rekam transaksi", "arsip keuangan", "buku data"],
+
+  "CICIL": ["angsuran pajak", "pembayaran bertahap", "pemenuhan kewajiban"],
+
+  "CUKAI": ["tarif produk", "biaya konsumsi", "pajak barang"],
+
   "DASAR": ["prinsip utama", "landasan hukum", "acuan fiskal"],
+
   "DEBIT": ["saldo rekening", "pengurangan dana", "transaksi bank"],
+
   "DENDA": ["hukuman finansial", "biaya terlambat", "sanksi fiskal"],
+
   "FINAL": ["tarif tetap", "pajak khusus", "pendapatan akhir"],
+
   "GADAI": ["jaminan aset", "agunan resmi", "pinjaman terikat"],
+
+  "GUGAT": ["proses hukum", "penyelesaian sengketa", "keberatan pajak"],
+
   "HARGA": ["nilai pasar", "tarif jual", "biaya barang"],
+
   "HARTA": ["aset terdaftar", "barang milik", "properti kekayaan"],
+
   "HUKUM": ["aturan resmi", "regulasi fiskal", "sanksi legal"],
+
+  "IMPOR": ["barang masuk", "pembelian luar negeri", "transaksi internasional"],
+
+  "IURAN": ["kontribusi wajib", "pembayaran bersama", "biaya partisipasi"],
+
+  "JAKSA": ["pejabat hukum", "pengacara pemerintah", "penuntut umum"],
+
   "JAMIN": ["dukungan aset", "agunan resmi", "proteksi dana"],
+
   "KASUS": ["sengketa fiskal", "permasalahan pajak", "perselisihan hukum"],
+
+  "KUNCI": ["pemblokiran akses", "kode verifikasi", "dokumen penting"],
+
+  "KUPON": ["voucher diskon", "potongan harga", "bukti pembayaran"],
+
   "KUASA": ["otoritas hukum", "delegasi resmi", "wakil fiskal"],
+
   "LAPOR": ["penyampaian data", "pengiriman SPT", "arsip tahunan"],
-  "LEBIH": ["saldo surplus", "dana surplus", "pengembalian resmi"],
+
   "LAWAN": ["mitra transaksi", "pihak eksternal", "pihak oposisi"],
+
+  "LEBIH": ["saldo surplus", "dana surplus", "pengembalian resmi"],
+
+  "LEGAL": ["berkaitan dengan hukum", "status sah", "tindakan resmi"],
+
   "MASUK": ["pendapatan resmi", "kas negara", "input data"],
+
   "MODAL": ["investasi awal", "penyertaan dana", "ekuitas bisnis"],
+
   "NILAI": ["harga wajar", "total aset", "acuan finansial"],
-  "NORMA": ["standar hitung", "aturan umum", "ketentuan pajak"],
+
   "NIHIL": ["tanpa kewajiban", "nol pajak", "SPT kosong"],
+
+  "NORMA": ["standar hitung", "aturan umum", "ketentuan pajak"],
+
   "OBJEK": ["sasaran fiskal", "barang terkena", "jasa kena beban"],
+
   "PAJAK": ["kewajiban fiskal", "kontribusi negara", "beban wajib"],
+
+  "PAKSA": ["penagihan wajib", "sanksi fiskal", "tindakan hukum"],
+
   "PASAL": ["ketentuan hukum", "aturan khusus", "poin peraturan"],
+
   "PIHAK": ["entitas luar", "mitra terkait", "hubungan eksternal"],
-  "SALDO": ["sisa dana", "jumlah tersisa", "pengurangan utang"],
+
+  "RESMI": ["dokumen pajak", "surat keterangan", "status terdaftar"],
+
+  "RISET": ["penelitian mendalam", "studi analisis", "investigasi data"],
+
   "SAHAM": ["ekuitas modal", "kepemilikan perusahaan", "dividen usaha"],
-  "SURAT": ["dokumen resmi", "pemberitahuan tertulis", "tagihan fiskal"],
-  "SUKUK": ["obligasi syariah", "surat halal", "investasi aman"],
-  "SKEMA": ["strategi bayar", "rencana fiskal", "proses pembayaran"],
+
+  "SALDO": ["sisa dana", "jumlah tersisa", "pengurangan utang"],
+
   "SETOR": ["transfer dana", "bayar resmi", "penerimaan kas"],
+
+  "SKEMA": ["strategi bayar", "rencana fiskal", "proses pembayaran"],
+
+  "SUKUK": ["obligasi syariah", "surat halal", "investasi aman"],
+
+  "SURAT": ["dokumen resmi", "pemberitahuan tertulis", "tagihan fiskal"],
+
   "TABEL": ["daftar tarif", "data pendapatan", "angsuran bayar"],
+
   "TAHUN": ["periode fiskal", "masa berjalan", "masa akuntansi"],
+
   "TARIF": ["persentase bayar", "jumlah resmi", "skala pajak"],
+
   "TARIK": ["pengambilan dana", "pembatalan keputusan", "pencairan tunai"],
-  "TUKAR": ["konversi nilai", "kurs resmi", "kurs mata uang"],
-  "TUNAI": ["bayaran langsung", "uang fisik", "kas terima"],
+
+  "TEORI": ["konsep fiskal", "dasar hukum", "pemahaman perpajakan"],
+
   "TOKEN": ["kode akses", "verifikasi data", "keamanan transaksi"],
-  "USAHA": ["bisnis kecil", "dagang lokal", "sektor ekonomi"],
-  "UTAMA": ["prioritas inti", "kegiatan pokok", "fokus inti"],
-  "UTANG": ["pinjaman usaha", "kewajiban bayar", "pelunasan kredit"],
+
+  "TUKAR": ["konversi nilai", "kurs resmi", "kurs mata uang"],
+
+  "TUNAI": ["bayaran langsung", "uang fisik", "kas terima"],
+
   "UJIAN": ["tes sertifikasi", "penilaian fiskal", "evaluasi pajak"],
-  "WAJIB": ["keharusan lapor", "tanggung jawab", "kewajiban formal"],
-  "WAKAF": ["donasi tanah", "amal produktif", "pengelolaan manfaat"],
-  "WARIS": ["aset keluarga", "penerima ahli", "hak ahli"],
+
+  "USAHA": ["bisnis kecil", "dagang lokal", "sektor ekonomi"],
+
+  "UTAMA": ["prioritas inti", "kegiatan pokok", "fokus inti"],
+
+  "UTANG": ["pinjaman usaha", "kewajiban bayar", "pelunasan kredit"],
+
   "VALID": ["keabsahan data", "verifikasi dokumen", "data sah"],
+
+  "WAJIB": ["keharusan lapor", "tanggung jawab", "kewajiban formal"],
+
+  "WAKAF": ["donasi tanah", "amal produktif", "pengelolaan manfaat"],
+
+  "WARIS": ["aset keluarga", "penerima ahli", "hak ahli"],
+
   "ZAKAT": ["donasi wajib", "pengurangan harta", "kontribusi agama"]
 }
